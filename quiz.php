@@ -1,8 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "Joost";
-$password = "12345";
-$dbname = "quiz";
+include 'login.php';
 
 $con = new mysqli($servername, $username, $password, $dbname);
 
