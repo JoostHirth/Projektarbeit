@@ -10,7 +10,6 @@ session_start();
     <title>Hauptseite</title>
 </head>
 <body>
-    <h2>Willkommen bei Quizify</h2>
 
     <?php
     if (isset($_SESSION['benutzername'])) {
