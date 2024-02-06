@@ -7,7 +7,7 @@ $password = "12345";
 $dbname = "quiz";
 
 $con = new mysqli($servername, $username, $password, $dbname);
-
+//marko
 if ($con->connect_error) {
     die("Error connecting to server" . $con->connect_error);
 }
@@ -35,4 +35,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $con->close();
 ?>
-
