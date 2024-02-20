@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 07. Jan 2024 um 15:25
+-- Erstellungszeit: 20. Feb 2024 um 18:15
 -- Server-Version: 10.4.32-MariaDB
 -- PHP-Version: 8.2.12
 
@@ -20,6 +20,21 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `quiz`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `ergebnisse`
+--
+
+CREATE TABLE `ergebnisse` (
+  `ergebnis_id` int(11) NOT NULL,
+  `benutzername` varchar(50) NOT NULL,
+  `frage_id` int(11) NOT NULL,
+  `antwort_id` int(11) NOT NULL,
+  `korrekt` tinyint(1) NOT NULL,
+  `antwort_zeit` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -76,36 +91,52 @@ CREATE TABLE `userdaten` (
 --
 
 INSERT INTO `userdaten` (`ID`, `username`, `passwort`) VALUES
-(5, 'qwer', '$2y$10$aDYFlv9c4CTiYOggtAkkL.ywaOS0KIgTz6.eVp.6FSoMoPMFAU3j.'),
-(8, 'ghjkl', '$2y$10$xIQarNWQ628A1PNq4275CuPYHzavsDqWWAXo5GCbkks9L/8STXd4i'),
-(9, 'asdf', '$2y$10$w77T.Hl0qVvIfnYWNnAeROcAzTh/tgPrHo/51O8g9yhcwDkXSc9.a');
+(10, 'asdf', '$2y$10$nK/9aXSetRS6xEurC/kBseD/V5mFHe4G1wIQoL9FMgPR/gwgwCmw2');
 
 --
 -- Indizes der exportierten Tabellen
 --
 
 --
+-- Indizes für die Tabelle `ergebnisse`
+--
+ALTER TABLE `ergebnisse`
+  ADD PRIMARY KEY (`ergebnis_id`),
+  ADD KEY `benutzername` (`benutzername`),
+  ADD KEY `frage_id` (`frage_id`),
+  ADD KEY `antwort_id` (`antwort_id`);
+
+--
 -- Indizes für die Tabelle `quiz_antwort`
 --
 ALTER TABLE `quiz_antwort`
   ADD PRIMARY KEY (`antwort_id`),
-  ADD KEY `frage_id` (`frage_id`);
+  ADD KEY `frage_id` (`frage_id`),
+  ADD KEY `idx_antwort_id` (`antwort_id`);
 
 --
 -- Indizes für die Tabelle `quiz_frage`
 --
 ALTER TABLE `quiz_frage`
-  ADD PRIMARY KEY (`frage_id`);
+  ADD PRIMARY KEY (`frage_id`),
+  ADD KEY `idx_frage_id` (`frage_id`);
 
 --
 -- Indizes für die Tabelle `userdaten`
 --
 ALTER TABLE `userdaten`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `idx_username` (`username`);
 
 --
 -- AUTO_INCREMENT für exportierte Tabellen
 --
+
+--
+-- AUTO_INCREMENT für Tabelle `ergebnisse`
+--
+ALTER TABLE `ergebnisse`
+  MODIFY `ergebnis_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `quiz_antwort`
@@ -123,11 +154,19 @@ ALTER TABLE `quiz_frage`
 -- AUTO_INCREMENT für Tabelle `userdaten`
 --
 ALTER TABLE `userdaten`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints der exportierten Tabellen
 --
+
+--
+-- Constraints der Tabelle `ergebnisse`
+--
+ALTER TABLE `ergebnisse`
+  ADD CONSTRAINT `ergebnisse_ibfk_1` FOREIGN KEY (`benutzername`) REFERENCES `userdaten` (`username`),
+  ADD CONSTRAINT `ergebnisse_ibfk_2` FOREIGN KEY (`frage_id`) REFERENCES `quiz_frage` (`frage_id`),
+  ADD CONSTRAINT `ergebnisse_ibfk_3` FOREIGN KEY (`antwort_id`) REFERENCES `quiz_antwort` (`antwort_id`);
 
 --
 -- Constraints der Tabelle `quiz_antwort`

@@ -1,13 +1,9 @@
 <?php
 session_start();
-
-$servername = "localhost";
-$username = "Joost";
-$password = "12345";
-$dbname = "quiz";
+include 'config.php';
 
 $con = new mysqli($servername, $username, $password, $dbname);
-//marko
+
 if ($con->connect_error) {
     die("Error connecting to server" . $con->connect_error);
 }

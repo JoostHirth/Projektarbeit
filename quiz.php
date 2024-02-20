@@ -1,5 +1,6 @@
 <?php
 include 'login.php';
+include 'config.php';
 
 $con = new mysqli($servername, $username, $password, $dbname);
 
@@ -7,7 +8,6 @@ if ($con->connect_error) {
     die("Error connecting to server" . $con->connect_error);
 }
 
-// Beispiel: Alle Fragen und zugehörigen Antworten abrufen
 $sql = "SELECT frage_id, frage_text FROM quiz_frage";
 $result = $con->query($sql);
 
@@ -19,7 +19,6 @@ if ($result->num_rows > 0) {
         echo "<h3>Frage $frage_id:</h3>";
         echo "<p>$frage_text</p>";
 
-        // Antworten zur aktuellen Frage abrufen
         $antwort_sql = "SELECT antwort_id, antwort_text FROM quiz_antwort WHERE frage_id = $frage_id";
         $antwort_result = $con->query($antwort_sql);
 
@@ -42,12 +41,19 @@ if ($result->num_rows > 0) {
 
 $con->close();
 ?>
-
 <script>
 function pruefeAntworten() {
     var antworten = document.querySelectorAll('input[type="radio"]:checked');
     var antwortIds = Array.from(antworten).map(input => input.value);
     var frageIds = Array.from(antworten).map(input => input.name.split('_')[1]);
+
+    // Berechne die Antwortzeiten
+    var antwortZeiten = {};
+    antworten.forEach(function(input) {
+        var frageId = input.name.split('_')[1];
+        var antwortZeit = Math.round((new Date().getTime() - quizStartZeit) / 1000); // Zeit seit dem Anzeigen der Frage
+        antwortZeiten[frageId] = antwortZeit;
+    });
 
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -56,9 +62,9 @@ function pruefeAntworten() {
         }
     };
 
+    // Hier sendest du auch die Antwortzeiten
     xhr.open('POST', 'pruefe_antworten.php', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.send('antwortIds=' + antwortIds.join(',') + '&frageIds=' + frageIds.join(','));
+    xhr.send('antwortIds=' + antwortIds.join(',') + '&frageIds=' + frageIds.join(',') + '&antwortZeiten=' + JSON.stringify(antwortZeiten));
 }
 </script>
-
