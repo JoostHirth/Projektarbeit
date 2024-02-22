@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="ersteSeite.css">
+    <title>Login Page</title>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="form-container sign-up">
+            <form>
+                <h1>Create Account</h1>
+            
+                <span>Or use your email to register</span>
+                <input type="text" placeholder="name">
+                <input type="email" placeholder="email">
+                <input type="password" placeholder="password">
+            </input>
+                <button>Sign Up</button>
+            </form>
+        </div>
+
+        <div class="form-container sign-in">
+            <form>
+                <h1>Sign in</h1>
+                
+                <span>Or use your email to login</span>
+                <input type="email" placeholder="email">
+                <input type="password" placeholder="password">
+                <a href="#">Forgot your password?</a>
+                <button>Sign In</button>
+            </form>
+        </div>
+
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Welcome Back</h1>
+                    <p>Enter your personal information</p>
+                    <button class="hidden" id="login">Sign in</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Welcome</h1>
+                    <p>Register with your personal information</p>
+                    <button class="hidden" id="login">Sign up</button>
+                </div>        
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
