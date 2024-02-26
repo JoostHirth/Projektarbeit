@@ -1,7 +1,7 @@
 <?php
 session_start();
-
 include 'login.php';
+include 'config.php';
 
 $con = new mysqli($servername, $username, $password, $dbname);
 
@@ -13,7 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $benutzername = $_POST['benutzername'];
     $passwort = password_hash($_POST['passwort'], PASSWORD_DEFAULT);
 
-    // Überprüfen, ob der Benutzername bereits vorhanden ist
     $check_sql = "SELECT * FROM userdaten WHERE username='$benutzername'";
     $check_result = $con->query($check_sql);
 
