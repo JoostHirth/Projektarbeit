@@ -1,53 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html> <!-- Defines the document type and version of HTML -->
+<html lang="en"> <!-- Specifies the language of the document -->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="ersteSeite.css">
-    <title>Login Page</title>
+    <meta charset="UTF-8"> <!-- Defines the character encoding -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Sets the viewport for responsive design -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"> <!-- Imports Font Awesome library -->
+    <link rel="stylesheet" href="ersteSeite.css"> <!-- Links to an external CSS file -->
+    <title>Login Page</title> <!-- Sets the title of the webpage -->
 </head>
 <body>
-    <div class="container" id="container">
-        <div class="form-container sign-up">
-            <form>
-                <h1>Create Account</h1>
+    <div class="container" id="container"> <!-- Main container for the login page -->
+        <div class="form-container sign-up"> <!-- Container for the sign-up form -->
+            <form> <!-- Sign-up form -->
+                <h1>Create Account</h1> <!-- Heading for sign-up section -->
             
-                <span>Use your email to register</span>
-                <input type="text" placeholder="name"></input>
-                <input type="email" placeholder="email"></input>
-                <input type="password" placeholder="password"></input>
-                <button>Sign Up</button>
+                <span>Use your email to register</span> <!-- Subtitle for sign-up section -->
+                <input type="text" placeholder="name"></input> <!-- Input field for name -->
+                <input type="email" placeholder="email"></input> <!-- Input field for email -->
+                <input type="password" placeholder="password"></input> <!-- Input field for password -->
+                <button>Sign Up</button> <!-- Button to submit sign-up form -->
             </form>
         </div>
 
-        <div class="form-container sign-in">
-            <form>
-                <h1>Sign in</h1>
+        <div class="form-container sign-in"> <!-- Container for the sign-in form -->
+            <form> <!-- Sign-in form -->
+                <h1>Sign in</h1> <!-- Heading for sign-in section -->
                 
-                <span>Or use your email to login</span>
-                <input type="email" placeholder="email"></input>
-                <input type="password" placeholder="password"></input>
-                <a href="#">Forgot your password?</a>
-                <button>Sign In</button>
+                <span>Or use your email to login</span> <!-- Subtitle for sign-in section -->
+                <input type="email" placeholder="email"> <!-- Input field for email -->
+                <input type="password" placeholder="password"> <!-- Input field for password -->                
+                <a href="#">Forgot your password?</a> <!-- Link for password recovery -->
+                <button>Sign In</button> <!-- Button to submit sign-in form -->
             </form>
         </div>
 
-        <div class="toggle-container">
-            <div class="toggle">
-                <div class="toggle-panel toggle-left">
-                    <h1>Welcome Back</h1>
-                    <p>Enter your personal information</p>
-                    <button class="hidden" id="loginBtn">Sign in</button>
+        <div class="toggle-container"> <!-- Container for toggle button -->
+            <div class="toggle"> <!-- Toggle button -->
+                <div class="toggle-panel toggle-left"> <!-- Left panel of toggle button -->
+                    <h1>Welcome</h1> <!-- Heading for left panel -->
+                    <p>Register with your personal information</p> <!-- Text for left panel -->
+                    <button class="hidden" id="loginBtn">Sign in</button> <!-- Button to toggle to sign-in form -->
                 </div>
-                <div class="toggle-panel toggle-right">
-                    <h1>Welcome</h1>
-                    <p>Register with your personal information</p>
-                    <button class="hidden" id="registerBtn">Sign up</button>
+                <div class="toggle-panel toggle-right"> <!-- Right panel of toggle button -->
+                    <h1>Welcome back </h1> <!-- Heading for right panel -->
+                    <p>Enter your personal information</p> <!-- Text for right panel -->
+                    <button class="hidden" id="registerBtn">Sign up</button> <!-- Button to toggle to sign-up form -->
                 </div>        
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="script.js"></script> <!-- Links to an external JavaScript file -->
 </body>
 </html>

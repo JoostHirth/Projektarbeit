@@ -8,13 +8,13 @@
 }
 
 body{
-    background-color: #c9d6ff;
-    background: linear-gradient(to right,#e2e2e2,#c9d6ff);
+    background: url('Download.jpeg') no-repeat;
     display:flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     height: 100vh;
+
 }
 
 .container{
@@ -174,8 +174,6 @@ body{
     transform:translateX(0);
 
 }
-
-
 
 .toggle-right{
     right:0;
