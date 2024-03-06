@@ -41,7 +41,9 @@ body{
 
 
 }
-
+.btn-gast{
+    background-color: red;
+}
 .container .title {
     text-align: center;
     color: #333; 
@@ -109,7 +111,7 @@ body{
     border: none;
     outline: none;
     border-radius: 40px;
-    box-shadow: 0 0 10px rba(0,0,0, 0.1);
+    box-shadow: 0 0 10px rgba(0,0,0, 0.1);
     cursor: pointer;
     color:#333;
     font-weight: 600;
