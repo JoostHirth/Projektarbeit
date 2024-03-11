@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Quizio!</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="ZweiteSeite.css">
+</head>
+<body>
+    
+
+
+
+<nav class="sidebar">
+    <div class="sidebar-inner">
+        <header class="sidebar-header">
+            <button type="button" class="sidebar-burger"
+            onclick="toggleSidebar()">
+            <i class='bx bx-menu'></i>
+        </button>
+        </header>
+        <nav class="sidebar-menu">
+            <button type="button" >
+                <i class='bx bx-home-alt' ></i>
+                <span>Home</span>
+            </button>
+
+            <button type="button" >
+                <i class='bx bxs-user-account' ></i>
+                <span>Mein Profil</span>
+            </button>
+
+            <button type="button" >
+                <i class='bx bx-question-mark' ></i>
+             <span>Fragen</span>
+            </button>
+
+            <button type="button" >
+                <i class='bx bx-smile' ></i>       
+               <span>Creators</span>
+            </button>
+
+            <button type="button" >
+                <i class='bx bx-cog' ></i>      
+              <span>Einstellungen</span>
+            </button>
+            <button type="button" >
+                <i class='bx bx-log-out' ></i>        
+              <span>Log out</span>
+            </button>
+
+        </nav>
+
+    </div>
+</nav>
+
+<div class="main-content">
+    <h1>Quizio</h1>
+    <button class="play-button">Play</button>
+</div>
+
+    <script type="text/javascript">
+        const toggleSidebar = () => document.body.classList.toggle("open");
+     </script>
+</body>
+</html>

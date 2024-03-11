@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin:0;
+    background: url('slika.jpeg');
+    background-size: cover;
+    background-position: center;
+    display:flex;
+    justify-content: center;
+}
+button{
+    background: transparent;
+    border:0;
+    padding:0;
+    cursor:pointer;
+}
+
+.sidebar{
+    position:absolute;
+    overflow: hidden;
+    top:0;
+    left: 0;
+    width: 75px;
+    height: 100%;
+    background: #3949ab;
+    transition: all 0.4s;
+}
+
+body.open .sidebar{
+    width: 240px;
+
+}
+.sidebar-inner{
+    position:absolute;
+    top:0;
+    left:0;
+    width: 300px;
+}
+
+.sidebar-header{
+    display:flex;
+    align-items: center;
+    height: 68px;
+    padding: 0 1.25rem 0 0;
+    background:rgba(0,0,0,0.1);
+    border-left: 3px solid transparent;
+    transition:all 0.4s;
+}
+
+.sidebar-header:hover{
+    border-left: 3px #bdbdbd;
+}
+
+.sidebar-burger{
+    width: 70px;
+    height: 70px;
+    display:grid;
+    place-items: center;
+}
+
+.sidebar-burger > i,body.open sidebar-burger > i{
+    font-size:25px;
+    color:#f9f9f9;
+    transition: all 0.4s;
+}
+
+.sidebar-burger > i,body.open sidebar-burger:hover > i{
+    color:#bdbdbd;
+}
+
+.sidebar-menu{
+    display:grid;
+}
+
+.sidebar-menu > button{
+    display: flex;
+    gap:12px;
+    align-items: center;
+    height:55px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    line-height: 1;
+    padding:0 22px;
+    border-left: 3px solid transparent;
+    transition: all 0.4s;
+}
+
+
+.sidebar-menu button:hover{
+    border-left: 3px solid #f9f9f9;
+
+}
+.sidebar-menu >button.has-border{
+    padding-bottom: 1rem;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    margin-bottom:1rem;
+}
+
+.sidebar-menu >button > i {
+    font-size: 25px;
+    color:#f9f9f9;
+    transition: all 0.4s;
+}
+
+.sidebar-menu > button:hover > i, .sidebar-menu > button:hover > span{
+    color:#bdbdbd;
+}
+
+.sidebar-menu > button >span{
+    color:#f9f9f9;
+    opacity: 0;
+    transition: all 0.4s;
+}
+
+body.open .sidebar-menu >button > span{
+    opacity: 1;
+    transition: all 0.4s;
+}
+
+.main-content {
+    position: absolute;
+    top:20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.main-content h1 {
+    font-size: 4em;
+    color: #ffffff;
+}
+
+.play-button {
+    background-color: #3949ab;
+    color: #ffffff;
+    border: none;
+    padding: 5px 20px;
+    font-size: 3em;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+
+
