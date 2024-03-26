@@ -17,7 +17,7 @@
 
             <div class="login-form">
             <h2>Login</h2>
-            <form id="loginForm">
+            <form action="login.php" methode="post">
                 <div class="input-box">
                     <input type="text" placeholder="Username" id="username" required>
                 </div>
@@ -27,7 +27,8 @@
                 </div>
 
                 <button type="submit" class="btn">Login</button>
-                <button type="submit" class="btn">Als Gast spielen</button>
+               
+                
 
             </form>
         </div>
@@ -40,10 +41,6 @@
                 </div>
 
                 <div class="input-box">
-                    <input type="email" placeholder="Email" id="email" required>
-                </div>
-
-                <div class="input-box">
                     <input type="password" placeholder="Password" id="regPassword" required>
                  </div>
 
@@ -51,6 +48,11 @@
                 
             </form>
         </div>
+        <div class="gast-form">
+            <h2>Gast</h2>
+            <button type="button" class="btn">Gast</button> <!-- Button-Typ auf "button" ändern -->
+        </div>
+        
         
     </div>
 </div>
