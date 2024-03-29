@@ -1,22 +1,35 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $antwortIds = $_POST['antwortIds'];
-    $frageIds = $_POST['frageIds'];
-    $antwortZeiten = json_decode($_POST['antwortZeiten'], true); // Antwortzeiten der Benutzer
+include 'config.php'; // Stellen Sie sicher, dass die Konfigurationsdatei eingebunden ist
 
-    // Hier kannst du deine eigene Logik zur Punkteberechnung implementieren
-    $punkte = array();
-    foreach ($frageIds as $frageId) {
-        // Hier ein Beispiel für eine mögliche Punktberechnung:
-        // Je schneller die Antwort, desto mehr Punkte
-        // Du kannst die Berechnung basierend auf deinen Anforderungen anpassen
-        // Zum Beispiel kannst du eine lineare, exponentielle oder logarithmische Skalierung verwenden
-        // Dies ist nur ein einfaches Beispiel
-        $antwortZeit = $antwortZeiten[$frageId];
-        $punkte[] = max(0, round((10 - $antwortZeit) * 10)); // Beispiel: Maximal 100 Punkte, wenn die Antwort in weniger als 10 Sekunden erfolgt
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+    $selectedAnswers = $_POST['selected_answers'];
+    $correctAnswersCount = 0;
+
+    $con = new mysqli($servername, $username, $password, $dbname);
+    if ($con->connect_error) {
+        die("Error connecting to server" . $con->connect_error);
     }
 
-    // Jetzt kannst du die Ergebnisse an den Client zurückgeben oder sie in die Datenbank speichern
-    echo json_encode($punkte);
+    foreach ($selectedAnswers as $frage_id => $selectedAntwortId) {
+        // Abrufen der korrekten Antwort aus der Datenbank
+        $sql = "SELECT antwort_id FROM quiz_antwort WHERE frage_id = $frage_id AND korrekt = 1";
+        $result = $con->query($sql);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $correctAntwortId = $row['antwort_id'];
+
+            // Überprüfen, ob die ausgewählte Antwort korrekt ist
+            if ($selectedAntwortId == $correctAntwortId) {
+                $correctAnswersCount++;
+                echo "richtig";
+                echo "$correctAnswersCount";
+            }
+        }
+    }
+
+    $points = $correctAnswersCount +1; 
+    echo "Punkte: $points"; 
+
+    $con->close();
 }
 ?>

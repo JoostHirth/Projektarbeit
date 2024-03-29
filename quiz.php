@@ -1,70 +1,100 @@
-<?php
-include 'login.php';
-include 'config.php';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <script>
+        var fullPoints = 1000; 
 
-$con = new mysqli($servername, $username, $password, $dbname);
+        function startTimerWithDelay() {
+            setTimeout(startTimer, 5000); // Verzögerung von 5 Sekunden (5000 Millisekunden)
+        }
 
-if ($con->connect_error) {
-    die("Error connecting to server" . $con->connect_error);
-}
+        function startTimer() {
+            window.startTime = new Date().getTime(); // Startzeit in Millisekunden
+        }
 
-$sql = "SELECT frage_id, frage_text FROM quiz_frage";
-$result = $con->query($sql);
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $frage_id = $row['frage_id'];
-        $frage_text = $row['frage_text'];
-
-        echo "<h3>Frage $frage_id:</h3>";
-        echo "<p>$frage_text</p>";
-
-        $antwort_sql = "SELECT antwort_id, antwort_text FROM quiz_antwort WHERE frage_id = $frage_id";
-        $antwort_result = $con->query($antwort_sql);
-
-        if ($antwort_result->num_rows > 0) {
-            while ($antwort_row = $antwort_result->fetch_assoc()) {
-                $antwort_id = $antwort_row['antwort_id'];
-                $antwort_text = $antwort_row['antwort_text'];
-                echo "<label><input type='radio' name='antwort_$frage_id' value='$antwort_id'> $antwort_text</label><br>";
+        function stopTimer() {
+            if (window.startTime) {
+                var endTime = new Date().getTime(); 
+                var elapsedTime = (endTime - window.startTime) / 1000; 
+                var points = calculatePoints(elapsedTime); 
+                document.getElementById("ergebnis").innerHTML = "Punkte: " + points;
             }
-        } else {
-            echo "Keine Antworten gefunden.";
         }
-    }
 
-    echo "<button onclick='pruefeAntworten()'>Antworten überprüfen</button>";
-    echo "<div id='ergebnis'></div>";
-} else {
-    echo "Keine Fragen gefunden.";
-}
-
-$con->close();
-?>
-<script>
-function pruefeAntworten() {
-    var antworten = document.querySelectorAll('input[type="radio"]:checked');
-    var antwortIds = Array.from(antworten).map(input => input.value);
-    var frageIds = Array.from(antworten).map(input => input.name.split('_')[1]);
-
-    // Berechne die Antwortzeiten
-    var antwortZeiten = {};
-    antworten.forEach(function(input) {
-        var frageId = input.name.split('_')[1];
-        var antwortZeit = Math.round((new Date().getTime() - quizStartZeit) / 1000); // Zeit seit dem Anzeigen der Frage
-        antwortZeiten[frageId] = antwortZeit;
-    });
-
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            document.getElementById('ergebnis').innerHTML = xhr.responseText;
+        function calculatePoints(elapsedTime) {
+            return (elapsedTime < 5) ? fullPoints : Math.round(fullPoints - (elapsedTime - 5) * 200, 0);
         }
-    };
 
-    // Hier sendest du auch die Antwortzeiten
-    xhr.open('POST', 'pruefe_antworten.php', true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.send('antwortIds=' + antwortIds.join(',') + '&frageIds=' + frageIds.join(',') + '&antwortZeiten=' + JSON.stringify(antwortZeiten));
-}
-</script>
+        function pruefeAntworten() {
+            stopTimer(); 
+            
+            var elapsedTime = 0;
+            if (window.startTime) {
+                elapsedTime = (new Date().getTime() - window.startTime) / 1000;
+            }
+            var points = calculatePoints(elapsedTime); // Punkte berechnen
+            document.getElementById("ergebnis").innerHTML = "Punkte: " + points;
+            
+            
+        }
+
+    </script>
+</head>
+<body onload="startTimerWithDelay()">
+<form action="pruefe_antworten.php" method="post">
+
+    <div class="container">
+        <div class="title">
+            <h1>QUIZIFY</h1>
+            <h3>BKI QUIZ GAME</h3>
+        </div>
+        
+        <div class="container2">
+            <?php
+            include 'config.php';
+            $con = new mysqli($servername, $username, $password, $dbname);
+            if ($con->connect_error) {
+                die("Error connecting to server" . $con->connect_error);
+            }
+
+            $sql = "SELECT frage_id, frage_text FROM quiz_frage";
+            $result = $con->query($sql);
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $frage_id = $row['frage_id'];
+                    $frage_text = $row['frage_text'];
+
+                    echo "<h3>Frage $frage_id:</h3>";
+                    echo "<p>$frage_text</p>";
+
+                    $antwort_sql = "SELECT antwort_id, antwort_text FROM quiz_antwort WHERE frage_id = $frage_id";
+                    $antwort_result = $con->query($antwort_sql);
+
+                    if ($antwort_result->num_rows > 0) {
+                        while ($antwort_row = $antwort_result->fetch_assoc()) {
+                            $antwort_id = $antwort_row['antwort_id'];
+                            $antwort_text = $antwort_row['antwort_text'];
+                            echo "<label><input type='radio' name='antwort_$frage_id' value='$antwort_id'> $antwort_text</label><br>";
+                        }
+                    } else {
+                        echo "Keine Antworten gefunden.";
+                    }
+                }
+
+                echo "<button onclick='pruefeAntworten()'>Antworten überprüfen</button>";
+                echo "<div id='ergebnis'></div>";
+            } else {
+                echo "Keine Fragen gefunden.";
+            }
+
+            $con->close();
+            ?>
+        </div>
+    </div>
+    </form>
+</body>
+</html>
