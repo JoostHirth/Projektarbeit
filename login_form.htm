@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login_form.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
     <title>Login</title>
 </head>
 <body>
@@ -15,11 +19,19 @@
     <div class="container2">
         <div class="login-form">
             <form action="login.php" method="post">
-                Benutzername: <input type="text" name="benutzername" required><br>
-                Passwort: <input type="password" name="passwort" required><br>
-                <input type="submit" value="Anmelden">
+                Benutzername: <input type="text"class="name" name="benutzername" required><br>
+                Passwort: <input type="password"class="password" name="passwort" required><br>
+                <button type="submit" class="button1">Anmelden</button>         
+
             </form>
         </div>
+        <div class="check"><input type="checkbox" class="check">Remember me</input>
+        </div>        
+        <button class="return"><i class='bx bx-arrow-back' ></i>
+            <span>Return</span>   
+        </button>
+
+    </div>
     </div>
 </body>
 </html>
