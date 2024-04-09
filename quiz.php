@@ -8,12 +8,15 @@
         var fullPoints = 1000; 
 
         function startTimerWithDelay() {
-            setTimeout(startTimer, 5000); // Verzögerung von 5 Sekunden (5000 Millisekunden)
+            disableAnswerSelection();
+            setTimeout(startTimer, 3000);
+            
         }
 
         function startTimer() {
-            window.startTime = new Date().getTime(); // Startzeit in Millisekunden
-        }
+            window.startTime = new Date().getTime(); 
+            enableAnswerSelection();
+            }
 
         function stopTimer() {
             if (window.startTime) {
@@ -24,6 +27,21 @@
             }
         }
 
+        function disableAnswerSelection() {
+        // Deaktiviere alle Radiobuttons
+        var radios = document.querySelectorAll('input[type="radio"]');
+        for (var i = 0; i < radios.length; i++) {
+            radios[i].disabled = true;
+        }
+    }
+
+    function enableAnswerSelection() {
+        // Aktiviere alle Radiobuttons
+        var radios = document.querySelectorAll('input[type="radio"]');
+        for (var i = 0; i < radios.length; i++) {
+            radios[i].disabled = false;
+        }
+    }
         function calculatePoints(elapsedTime) {
             return (elapsedTime < 5) ? fullPoints : Math.round(fullPoints - (elapsedTime - 5) * 200, 0);
         }
@@ -37,9 +55,19 @@
             }
             var points = calculatePoints(elapsedTime); // Punkte berechnen
             document.getElementById("ergebnis").innerHTML = "Punkte: " + points;
-
-            // Das Formular mit den Benutzerantworten senden
-            document.getElementById("antwortenForm").submit();
+        
+            // Verarbeiten Sie die Antworten mit JavaScript und zeigen Sie die Ergebnisse auf der Seite an
+            var form = document.getElementById("antwortenForm");
+            var formData = new FormData(form);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "pruefe_antworten.php", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = xhr.responseText;
+                    document.getElementById("ergebnis").innerHTML += "<br>" + response;
+                }
+            };
+            xhr.send(formData);
         }
     </script>
 </head>
@@ -51,7 +79,7 @@
         </div>
         
         <div class="container2">
-            <form id="antwortenForm" action="pruefe_antworten.php" method="post">
+            <form id="antwortenForm" action="#" method="post">
                 <?php
                 include 'config.php';
                 $con = new mysqli($servername, $username, $password, $dbname);
