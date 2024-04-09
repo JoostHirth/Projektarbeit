@@ -47,28 +47,28 @@
         }
 
         function pruefeAntworten() {
-            stopTimer(); 
-            
-            var elapsedTime = 0;
-            if (window.startTime) {
-                elapsedTime = (new Date().getTime() - window.startTime) / 1000;
-            }
-            var points = calculatePoints(elapsedTime); // Punkte berechnen
-            document.getElementById("ergebnis").innerHTML = "Punkte: " + points;
-        
-            // Verarbeiten Sie die Antworten mit JavaScript und zeigen Sie die Ergebnisse auf der Seite an
-            var form = document.getElementById("antwortenForm");
-            var formData = new FormData(form);
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "pruefe_antworten.php", true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    var response = xhr.responseText;
-                    document.getElementById("ergebnis").innerHTML += "<br>" + response;
-                }
-            };
-            xhr.send(formData);
+        stopTimer(); 
+
+        var elapsedTime = 0;
+        if (window.startTime) {
+            elapsedTime = (new Date().getTime() - window.startTime) / 1000;
         }
+        var points = calculatePoints(elapsedTime); // Punkte berechnen
+        document.getElementById("ergebnis").innerHTML = "Punkte: " + points;
+
+        // Verarbeiten Sie die Antworten mit JavaScript und zeigen Sie die Ergebnisse auf der Seite an
+        var form = document.getElementById("antwortenForm");
+        var formData = new FormData(form);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "pruefe_antworten.php", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText;
+                document.getElementById("ergebnis").innerHTML += "<br>" + response;
+            }
+        };
+        xhr.send(formData);
+    }
     </script>
 </head>
 <body onload="startTimerWithDelay()">
