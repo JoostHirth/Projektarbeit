@@ -1,127 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz</title>
-    <script>
-        var fullPoints = 1000; 
+<?php
+include 'config.php';
 
-        function startTimerWithDelay() {
-            disableAnswerSelection();
-            setTimeout(startTimer, 3000);
-            
-        }
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-        function startTimer() {
-            window.startTime = new Date().getTime(); 
-            enableAnswerSelection();
+// Verbindung überprüfen
+if ($conn->connect_error) {
+    die("Verbindung fehlgeschlagen: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Schritt 4: Benutzerantworten erfassen (Annahme: POST-Daten werden verwendet)
+    foreach ($_POST as $frage_id => $antwort_id) {
+        // Hier können Sie die Benutzerantworten speichern oder verarbeiten
+        // Annahme: Sie speichern die Benutzerantworten in einer Datenbank
+
+        // Schritt 5: Antworten überprüfen
+        $frage_id = mysqli_real_escape_string($conn, $frage_id); // Sicherheitsmaßnahme: SQL-Injektion verhindern
+        $antwort_id = mysqli_real_escape_string($conn, $antwort_id); // Sicherheitsmaßnahme: SQL-Injektion verhindern
+
+        $korrekte_antwort_query = "SELECT korrekt FROM quiz_antwort WHERE frage_id = '$frage_id' AND antwort_id = '$antwort_id'";
+        $korrekte_antwort_result = mysqli_query($conn, $korrekte_antwort_query);
+
+        if (mysqli_num_rows($korrekte_antwort_result) > 0) {
+            $row = mysqli_fetch_assoc($korrekte_antwort_result);
+            $korrekt = $row['korrekt'];
+            if ($korrekt == 1) {
+                echo "Die Antwort ist korrekt!";
+            } else {
+                echo "Die Antwort ist falsch!";
             }
-
-        function stopTimer() {
-            if (window.startTime) {
-                var endTime = new Date().getTime(); 
-                var elapsedTime = (endTime - window.startTime) / 1000; 
-                var points = calculatePoints(elapsedTime); 
-                document.getElementById("ergebnis").innerHTML = "Punkte: " + points;
-            }
-        }
-
-        function disableAnswerSelection() {
-        // Deaktiviere alle Radiobuttons
-        var radios = document.querySelectorAll('input[type="radio"]');
-        for (var i = 0; i < radios.length; i++) {
-            radios[i].disabled = true;
+        } else {
+            echo "Die Antwort wurde nicht gefunden!";
         }
     }
+}
 
-    function enableAnswerSelection() {
-        // Aktiviere alle Radiobuttons
-        var radios = document.querySelectorAll('input[type="radio"]');
-        for (var i = 0; i < radios.length; i++) {
-            radios[i].disabled = false;
-        }
-    }
-        function calculatePoints(elapsedTime) {
-            return (elapsedTime < 5) ? fullPoints : Math.round(fullPoints - (elapsedTime - 5) * 200, 0);
-        }
+// Verbindung schließen
+$conn->close();
+?>
 
-        function pruefeAntworten() {
-        stopTimer(); 
+<script>
+    window.onload = function() {
+        // Initialisierung: Submit-Button deaktivieren
+        document.getElementById("submitBtn").disabled = true;
 
-        var elapsedTime = 0;
-        if (window.startTime) {
-            elapsedTime = (new Date().getTime() - window.startTime) / 1000;
-        }
-        var points = calculatePoints(elapsedTime); // Punkte berechnen
-        document.getElementById("ergebnis").innerHTML = "Punkte: " + points;
+        // Countdown für die erste Verzögerung von 3 Sekunden
+        setTimeout(function() {
+            // Aktiviere den Submit-Button
+            document.getElementById("submitBtn").disabled = false;
 
-        // Verarbeiten Sie die Antworten mit JavaScript und zeigen Sie die Ergebnisse auf der Seite an
-        var form = document.getElementById("antwortenForm");
-        var formData = new FormData(form);
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "pruefe_antworten.php", true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                var response = xhr.responseText;
-                document.getElementById("ergebnis").innerHTML += "<br>" + response;
-            }
-        };
-        xhr.send(formData);
-    }
-    </script>
-</head>
-<body onload="startTimerWithDelay()">
-    <div class="container">
-        <div class="title">
-            <h1>QUIZIFY</h1>
-            <h3>BKI QUIZ GAME</h3>
-        </div>
-        
-        <div class="container2">
-            <form id="antwortenForm" action="#" method="post">
-                <?php
-                include 'config.php';
-                $con = new mysqli($servername, $username, $password, $dbname);
-                if ($con->connect_error) {
-                    die("Error connecting to server" . $con->connect_error);
+            // Starte den Countdown für die zweite Verzögerung von 10 Sekunden
+            var countdown = 10;
+            var countdownInterval = setInterval(function() {
+                countdown--;
+                document.getElementById("countdownTimer").innerHTML = "Nächster Versuch in " + countdown + " Sekunden";
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval); // Countdown beenden
+                    document.getElementById("countdownTimer").innerHTML = ""; // Timer ausblenden
+                    document.getElementById("submitBtn").disabled = true; // Submit-Button deaktivieren
+
+                    // Hier können Sie die richtige Antwort farblich anzeigen
+                    // Annahme: Die richtige Antwort ist mit einer Klasse "richtigeAntwort" gekennzeichnet
+                    document.querySelector('.richtigeAntwort').style.color = 'green';
                 }
+            }, 1000); // Update alle 1000 Millisekunden (1 Sekunde)
+        }, 3000); // Starte den Countdown nach 3 Sekunden
+    };
+</script>
 
-                $sql = "SELECT frage_id, frage_text FROM quiz_frage";
-                $result = $con->query($sql);
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+    <!-- Hier werden die Fragen und Antworten dynamisch generiert -->
+    <!-- Beispiel -->
+    <p>Frage 1: Was ist die Hauptstadt von Frankreich?</p>
+    <ul>
+        <li><input type="radio" name="1" value="1"> Berlin</span></li>
+        <li><input type="radio" name="1" value="2"> London</li>
+        <li><input type="radio" name="1" value="3"> <span class="richtigeAntwort">Paris</li>
+    </ul>
 
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        $frage_id = $row['frage_id'];
-                        $frage_text = $row['frage_text'];
+    <!-- Weitere Fragen und Antworten hier einfügen -->
 
-                        echo "<h3>Frage $frage_id:</h3>";
-                        echo "<p>$frage_text</p>";
-
-                        $antwort_sql = "SELECT antwort_id, antwort_text FROM quiz_antwort WHERE frage_id = $frage_id";
-                        $antwort_result = $con->query($antwort_sql);
-
-                        if ($antwort_result->num_rows > 0) {
-                            while ($antwort_row = $antwort_result->fetch_assoc()) {
-                                $antwort_id = $antwort_row['antwort_id'];
-                                $antwort_text = $antwort_row['antwort_text'];
-                                echo "<label><input type='radio' name='antwort_$frage_id' value='$antwort_id'> $antwort_text</label><br>";
-                            }
-                        } else {
-                            echo "Keine Antworten gefunden.";
-                        }
-                    }
-
-                    echo "<button type='button' onclick='pruefeAntworten()'>Antworten überprüfen</button>";
-                    echo "<div id='ergebnis'></div>";
-                } else {
-                    echo "Keine Fragen gefunden.";
-                }
-
-                $con->close();
-                ?>
-            </form>
-        </div>
-    </div>
-</body>
-</html>
+    <input type="submit" id="submitBtn" value="Antworten überprüfen">
+    <p id="countdownTimer"></p>
+</form>
