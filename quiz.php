@@ -59,7 +59,7 @@ $conn->close();
                     clearInterval(countdownInterval); // Countdown beenden
                     document.getElementById("countdownTimer").innerHTML = ""; // Timer ausblenden
                     document.getElementById("submitBtn").disabled = true; // Submit-Button deaktivieren
-                    var points = calculatePoints(elapsedTime); 
+                    var points = calculatePoints(countdown); 
                     document.getElementById("ergebnis").innerHTML = "Punkte: " + points;
 
                     // Hier können Sie die richtige Antwort farblich anzeigen
@@ -68,8 +68,8 @@ $conn->close();
                 }
             }, 1000); // Update alle 1000 Millisekunden (1 Sekunde)
         }, 3000); // Starte den Countdown nach 3 Sekunden
-        function calculatePoints(elapsedTime) {
-            return (elapsedTime < 5) ? fullPoints : Math.round(fullPoints - (elapsedTime - 5) * 200, 0);
+        function calculatePoints(countdown) {
+            return (countdown < 5) ? fullPoints : Math.round(fullPoints - (countdown - 5) * 200, 0);
         }
     };
 </script>
