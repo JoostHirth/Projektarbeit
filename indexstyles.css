@@ -8,10 +8,9 @@ body{
     display:flex;
     justify-content: center;
     align-items: center;
-    background: url('slika.jpeg');
+    background: url('upitnik1.png');
     background-size: cover;
     background-position: fill;
-
 }
 
 
@@ -130,5 +129,3 @@ body{
     font-weight: 600;
     
 }
-
-
