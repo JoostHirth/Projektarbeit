@@ -43,6 +43,7 @@ $conn->close();
     window.onload = function() {
         // Initialisierung: Submit-Button deaktivieren
         document.getElementById("submitBtn").disabled = true;
+        var fullPoints = 1000; 
 
         // Countdown für die erste Verzögerung von 3 Sekunden
         setTimeout(function() {
@@ -58,6 +59,8 @@ $conn->close();
                     clearInterval(countdownInterval); // Countdown beenden
                     document.getElementById("countdownTimer").innerHTML = ""; // Timer ausblenden
                     document.getElementById("submitBtn").disabled = true; // Submit-Button deaktivieren
+                    var points = calculatePoints(elapsedTime); 
+                    document.getElementById("ergebnis").innerHTML = "Punkte: " + points;
 
                     // Hier können Sie die richtige Antwort farblich anzeigen
                     // Annahme: Die richtige Antwort ist mit einer Klasse "richtigeAntwort" gekennzeichnet
@@ -65,6 +68,9 @@ $conn->close();
                 }
             }, 1000); // Update alle 1000 Millisekunden (1 Sekunde)
         }, 3000); // Starte den Countdown nach 3 Sekunden
+        function calculatePoints(elapsedTime) {
+            return (elapsedTime < 5) ? fullPoints : Math.round(fullPoints - (elapsedTime - 5) * 200, 0);
+        }
     };
 </script>
 
