@@ -10,7 +10,7 @@ body{
     align-items: center;
     background: url('slika.jpeg');
     background-size: cover;
-    background-position: center;
+    background-position: fill;
 
 }
 
