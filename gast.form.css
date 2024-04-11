@@ -7,15 +7,13 @@ body{
     display:flex;
     justify-content: center;
     align-items: center;
-    background:url('17973871.jpg');
+    background:url('slika.jpeg');
     background-color: white;
     background-size: cover;
     background-position: center;
     padding:120px;
 }
-.container{
-    margin-right:950px;
-}
+
 .container2 {
     padding: 5px;
     margin:5px;
@@ -23,12 +21,12 @@ body{
     justify-content: center; 
     align-items: center; 
     text-align: center;
-    color: rgba(255, 140, 0, 0.9);
+    color: white;
     width:800px; 
     height:500px;  
     border:2px solid rgba(1, 1,1,0.5);    
     border-radius:20px;
-    background-color: whitesmoke;
+    background-color: transparent;
 }
 .text{
     display: flex;
@@ -45,6 +43,7 @@ body{
     padding: 15px;
     margin:15px;
 }
+
 .text h2{
     font-size: 5rem; 
     font-weight: bold;
@@ -63,7 +62,7 @@ body{
     border-radius: 67px;
     box-shadow: 0 0 10px rgba(0,0,0, 0.1);
     cursor: pointer;
-    color: rgba(255, 140, 0, 0.9);
+    color: white;
     font-weight: 600;
     font-size:4rem;
     display: block; 
@@ -84,3 +83,46 @@ body{
     font-weight: 600;
 }
 
+.sidebar{
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:absolute;
+    overflow: hidden;
+    top:0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background: #3949ab;
+    transition: all 0.4s;
+    background-color: rgba(0, 0, 0, 0.1);
+    
+    
+}
+.sidebar > button{
+    background: transparent;
+    border:0;
+    padding:0;
+    cursor:pointer;
+    border:2px solid rgba(1, 1,1,0.5);    
+    border-radius:20px;
+    color:white;
+    width: 250px;
+    height:50px;
+    font-weight: 700;
+    font-size:15px;
+
+}
+.sidebar > span{
+    position: absolute;
+    top: 0;
+    left: 5; 
+    color:white;
+    font-weight: 700;
+    font-size: 30px;
+    margin-bottom: 10px;
+    margin-top:10px;    
+    border-bottom:5px solid rgba(1, 1,1,0.5);    
+    
+}
