@@ -46,7 +46,7 @@ body{
     justify-content: center;
     align-items: center;
     width: 80%;
-    background:white;
+    background-color: rgba(0, 0, 0, 0.1);
     border: none;
     outline: none;
     border-radius: 40px;
