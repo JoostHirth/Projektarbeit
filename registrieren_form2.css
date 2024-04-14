@@ -1,0 +1,75 @@
+*{
+    margin:0;
+    padding:5px;
+    box-sizing: border-box;
+    font-family: "Poppins",sans-serif;
+}
+body{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background:url(slika.jpeg);
+    background-size:cover;
+    background-position: center;
+}
+.title{
+    font-size: 40px;
+    font-weight: 600;
+    margin:10px;
+    color:white;
+}
+.regestrieren-form{
+    margin-top:20px;
+    padding-top:75px;
+    font-size: 22px;
+    font-weight: 600;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color:white;
+    border:5px solid rgba(255, 255,255,0.5);    
+    border-radius:30px;
+}
+.name,.password{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:black;
+}
+.button1{
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0,0,0, 0.1);
+    cursor: pointer;
+    color:#333;
+    font-weight: 600;
+    color:black;
+    margin:0 0 20px 0 ;
+}
+.return{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0,0,0, 0.1);
+    cursor: pointer;
+    color:black;
+    margin:5px 0 0 0;
+}
+.container{
+    border:3px solid rgba(255, 255,255,0.2);    
+    border-radius:30px;
+    background:transparent;
+    margin-top:20px;
+    padding:20px 100px 20px 100px;
+
+}
