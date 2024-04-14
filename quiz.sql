@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 12. Apr 2024 um 17:24
+-- Erstellungszeit: 14. Apr 2024 um 15:42
 -- Server-Version: 10.4.32-MariaDB
 -- PHP-Version: 8.2.12
 
@@ -120,15 +120,19 @@ CREATE TABLE `quiz_fragen1` (
 CREATE TABLE `userdaten` (
   `ID` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `passwort` varchar(100) NOT NULL
+  `passwort` varchar(100) NOT NULL,
+  `gesamt_punkte` int(11) NOT NULL DEFAULT 0,
+  `richtig_beantwortet` int(11) NOT NULL DEFAULT 0,
+  `gesamt_fragen` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Daten für Tabelle `userdaten`
 --
 
-INSERT INTO `userdaten` (`ID`, `username`, `passwort`) VALUES
-(1, 'ghjkl', '$2y$10$Y4A5fcdLb2c9hbYyygX7guZCs21pKx2/XspCxjj0hmlxVKrif2HKe');
+INSERT INTO `userdaten` (`ID`, `username`, `passwort`, `gesamt_punkte`, `richtig_beantwortet`, `gesamt_fragen`) VALUES
+(1, 'ghjkl', '$2y$10$Y4A5fcdLb2c9hbYyygX7guZCs21pKx2/XspCxjj0hmlxVKrif2HKe', 3927, 1, 2),
+(3, 'qwer', '$2y$10$ZLsoa98D6lFNo/0Htv.cL.SsPr9tyCApU2naZcifcdu1wGHtWHWZe', 7924, 8, 10);
 
 --
 -- Indizes der exportierten Tabellen
@@ -188,7 +192,7 @@ ALTER TABLE `quiz_frage`
 -- AUTO_INCREMENT für Tabelle `userdaten`
 --
 ALTER TABLE `userdaten`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints der exportierten Tabellen
