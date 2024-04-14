@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'config.php';
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -8,11 +9,27 @@ if ($conn->connect_error) {
     die("Verbindung fehlgeschlagen: " . $conn->connect_error);
 }
 
+function calculatePoints($countdown) {
+    return round($countdown , 0); // Punkteberechnung
+}
+
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_SESSION['benutzername'])) {
+        $benutzername = $_SESSION['benutzername'];
+        echo "$benutzername";
+    }
     // Schritt 4: Benutzerantworten erfassen (Annahme: POST-Daten werden verwendet)
     foreach ($_POST as $frage_id => $antwort_id) {
-        // Hier können Sie die Benutzerantworten speichern oder verarbeiten
-        // Annahme: Sie speichern die Benutzerantworten in einer Datenbank
+        $gesamt_punkte = "SELECT gesamt_punkte FROM userdaten WHERE username = '$benutzername'";
+        $gesamt_punkteint = (int)$gesamt_punkte;
+
+        $gesamt_fragen = "SELECT gesamt_fragen FROM userdaten WHERE username = '$benutzername'";
+        $gesamt_fragenint = (int)$gesamt_fragen;
+
+        $richtig_beantwortet = "SELECT richtig_beantwortet FROM userdaten WHERE username = '$benutzername'";
+        $richtig_beantwortetint = (int)$richtig_beantwortet;
 
         // Schritt 5: Antworten überprüfen
         $frage_id = mysqli_real_escape_string($conn, $frage_id); // Sicherheitsmaßnahme: SQL-Injektion verhindern
@@ -26,8 +43,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $korrekt = $row['korrekt'];
             if ($korrekt == 1) {
                 echo "Die Antwort ist korrekt!";
+                $countdown = $_POST['countdownValue']; // Countdown-Wert auslesen
+                $points = calculatePoints($countdown); // Punkte berechnen
+                echo " Punkte: " . $points; // Punkte ausgeben
+                $gesamt_punkteint += $points; 
+                $sql_punkte = "UPDATE userdaten SET gesamt_punkte = gesamt_punkte + '$gesamt_punkteint' WHERE username = '$benutzername'";
+                mysqli_query($conn, $sql_punkte);
+                $gesamt_fragenint ++; 
+                $sql_fragen = "UPDATE userdaten SET gesamt_fragen = gesamt_fragen + '$gesamt_fragenint' WHERE username = '$benutzername'";
+                mysqli_query($conn, $sql_fragen);
+                $richtig_beantwortetint ++; 
+                $sql_richtig = "UPDATE userdaten SET richtig_beantwortet = richtig_beantwortet + '$richtig_beantwortetint' WHERE username = '$benutzername'";
+                mysqli_query($conn, $sql_richtig);
             } else {
                 echo "Die Antwort ist falsch!";
+                $gesamt_fragenint ++; 
+                $sql_fragen = "UPDATE userdaten SET gesamt_fragen = gesamt_fragen + '$gesamt_fragenint' WHERE username = '$benutzername'";
+                mysqli_query($conn, $sql_fragen);
             }
         } else {
             echo "Die Antwort wurde nicht gefunden!";
@@ -35,43 +67,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+
+
+
 // Verbindung schließen
 $conn->close();
 ?>
 
 <script>
-    window.onload = function() {
-        // Initialisierung: Submit-Button deaktivieren
-        document.getElementById("submitBtn").disabled = true;
-        var fullPoints = 1000; 
+window.onload = function() {
+    // Initialisierung: Submit-Button deaktivieren
+    document.getElementById("submitBtn").disabled = true;
+    var fullPoints = 1000; 
+    var countdown = 1000; // Start Countdown-Wert
 
-        // Countdown für die erste Verzögerung von 3 Sekunden
-        setTimeout(function() {
-            // Aktiviere den Submit-Button
-            document.getElementById("submitBtn").disabled = false;
+    // Countdown für die erste Verzögerung von 3 Sekunden
+    setTimeout(function() {
+        // Aktiviere den Submit-Button
+        document.getElementById("submitBtn").disabled = false;
 
-            // Starte den Countdown für die zweite Verzögerung von 10 Sekunden
-            var countdown = 10;
-            var countdownInterval = setInterval(function() {
-                countdown--;
-                document.getElementById("countdownTimer").innerHTML = "Nächster Versuch in " + countdown + " Sekunden";
-                if (countdown <= 0) {
-                    clearInterval(countdownInterval); // Countdown beenden
-                    document.getElementById("countdownTimer").innerHTML = ""; // Timer ausblenden
-                    document.getElementById("submitBtn").disabled = true; // Submit-Button deaktivieren
-                    var points = calculatePoints(countdown); 
-                    document.getElementById("ergebnis").innerHTML = "Punkte: " + points;
+        // Starte den Countdown für die zweite Verzögerung von 10 Sekunden
+        var countdownInterval = setInterval(function() {
+            countdown--;
+            document.getElementById("countdownTimer").innerHTML = "Nächster Versuch in " + Math.round(countdown/100, 0) + " Sekunden";
+            document.getElementById("countdownValue").value = countdown; // Countdown-Wert aktualisieren
+            if (countdown <= 0) {
+                clearInterval(countdownInterval); // Countdown beenden
+                document.getElementById("countdownTimer").innerHTML = ""; // Timer ausblenden
+                document.getElementById("submitBtn").disabled = true; // Submit-Button deaktivieren
+                document.getElementById("countdownValue").value = 0; // Countdown-Wert auf 0 setzen
 
-                    // Hier können Sie die richtige Antwort farblich anzeigen
-                    // Annahme: Die richtige Antwort ist mit einer Klasse "richtigeAntwort" gekennzeichnet
-                    document.querySelector('.richtigeAntwort').style.color = 'green';
-                }
-            }, 1000); // Update alle 1000 Millisekunden (1 Sekunde)
-        }, 3000); // Starte den Countdown nach 3 Sekunden
-        function calculatePoints(countdown) {
-            return (countdown < 5) ? fullPoints : Math.round(fullPoints - (countdown - 5) * 200, 0);
-        }
-    };
+                // Hier können Sie die richtige Antwort farblich anzeigen
+                // Annahme: Die richtige Antwort ist mit einer Klasse "richtigeAntwort" gekennzeichnet
+                document.querySelector('.richtigeAntwort').style.color = 'green';
+            }
+        }, 10); // Update alle 1000 Millisekunden (1 Sekunde)
+    }, 3000); // Starte den Countdown nach 3 Sekunden
+
+};
+
 </script>
 
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
@@ -85,7 +119,9 @@ $conn->close();
     </ul>
 
     <!-- Weitere Fragen und Antworten hier einfügen -->
-
+    <input type="hidden" id="countdownValue" name="countdownValue" value="">
     <input type="submit" id="submitBtn" value="Antworten überprüfen">
     <p id="countdownTimer"></p>
+    <p id="ergebnis"></p>
+
 </form>

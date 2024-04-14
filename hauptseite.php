@@ -17,12 +17,11 @@ $con = new mysqli($servername, $username, $password, $dbname);
 if ($con->connect_error) {
     die("Error connecting to server" . $con->connect_error);
 }
+
 // SQL-Abfrage, um die Top-10-Werte von allen Benutzern abzurufen
-$sql = "SELECT u.username, COUNT(e.ergebnis_id) AS total_fragen, SUM(e.korrekt) AS richtig_beantwortet
-        FROM userdaten u
-        LEFT JOIN ergebnisse e ON u.ID = e.benutzer_id
-        GROUP BY u.username
-        ORDER BY richtig_beantwortet DESC
+$sql = "SELECT username, gesamt_punkte, richtig_beantwortet, gesamt_fragen
+        FROM userdaten
+        ORDER BY gesamt_punkte DESC
         LIMIT 10";
 
 $result = mysqli_query($con, $sql);
@@ -30,18 +29,20 @@ $result = mysqli_query($con, $sql);
 if ($result && mysqli_num_rows($result) > 0) {
     echo "<h3>Top 10 Spieler</h3>";
     echo "<table>";
-    echo "<tr><th>Benutzername</th><th>Gesamtfragen</th><th>Richtig beantwortet</th></tr>";
+    echo "<tr><th>Benutzername</th><th>Gesamtpunkte</th><th>Richtig beantwortet</th><th>Gesamt beantwortet</th></tr>";
     while ($row = mysqli_fetch_assoc($result)) {
         echo "<tr>";
         echo "<td>" . $row['username'] . "</td>";
-        echo "<td>" . $row['total_fragen'] . "</td>";
+        echo "<td>" . $row['gesamt_punkte'] . "</td>";
         echo "<td>" . $row['richtig_beantwortet'] . "</td>";
+        echo "<td>" . $row['gesamt_fragen'] . "</td>";
         echo "</tr>";
     }
     echo "</table>";
 } else {
     echo "Keine Daten verfügbar.";
 }
+
 
 // Verbindung zur Datenbank schließen
 mysqli_close($con);
