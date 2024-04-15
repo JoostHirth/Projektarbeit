@@ -58,10 +58,10 @@ mysqli_close($con);
 
     <h3>Wähle ein Quiz-Thema:</h3>
     <ul>
-        <li><a href='quiz.php'>Quiz Thema 1</a></li>
-        <li><a href='quiz.php'>Quiz Thema 2</a></li>
-        <li><a href='quiz.php'>Quiz Thema 3</a></li>
-        <li><a href='quiz.php'>Quiz Thema 4</a></li>
-    </ul>
+    <li><a href='quiz.php?thema=1'>Quiz Thema 1</a></li>
+    <li><a href='quiz.php?thema=2'>Quiz Thema 2</a></li>
+    <li><a href='quiz.php?thema=3'>Quiz Thema 3</a></li>
+    <li><a href='quiz.php?thema=4'>Quiz Thema 4</a></li>
+</ul>
 </body>
 </html>

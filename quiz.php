@@ -13,12 +13,14 @@ function calculatePoints($countdown) {
     return round($countdown , 0); // Punkteberechnung
 }
 
-
+$id = 1;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_SESSION['benutzername'])) {
         $benutzername = $_SESSION['benutzername'];
-        echo "$benutzername";
+    }
+    else {
+        $benutzername = "Gast";
     }
     // Schritt 4: Benutzerantworten erfassen (Annahme: POST-Daten werden verwendet)
     foreach ($_POST as $frage_id => $antwort_id) {
@@ -55,31 +57,72 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $richtig_beantwortetint ++; 
                 $sql_richtig = "UPDATE userdaten SET richtig_beantwortet = richtig_beantwortet + '$richtig_beantwortetint' WHERE username = '$benutzername'";
                 mysqli_query($conn, $sql_richtig);
+                $id++; 
             } else {
                 echo "Die Antwort ist falsch!";
                 $gesamt_fragenint ++; 
                 $sql_fragen = "UPDATE userdaten SET gesamt_fragen = gesamt_fragen + '$gesamt_fragenint' WHERE username = '$benutzername'";
                 mysqli_query($conn, $sql_fragen);
-            }
+            }   $id++;
         } else {
             echo "Die Antwort wurde nicht gefunden!";
         }
     }
 }
+$thema = $_GET['thema'] ?? 1;
+echo "$thema";
 
-$sql = "SELECT frage_text FROM quiz_frage WHERE frage_id = '1'";
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_assoc($result);
+switch ($thema) {
+    case 1:
+        $frage_thema = "quiz_frage";
+        $antwort_thema = "quiz_antwort";
+        break;
+    case 2:
+        $frage_thema = "quiz_frage2";
+        $antwort_thema = "quiz_antwort2";
+        break;
+    case 3:
+        $frage_thema = "quiz_frage3";
+        $antwort_thema = "quiz_antwort3";
+        break;
+    case 4:
+        $frage_thema = "quiz_frage4";
+        $antwort_thema = "quiz_antwort4";
+        break;
+}
 
-$frage = $row['frage_text'];
+
+$sql_fragetext = "SELECT frage_text FROM $frage_thema WHERE frage_id = '$id'";
+$result_fragetext = mysqli_query($conn, $sql_fragetext);
+$row_fragetext = mysqli_fetch_assoc($result_fragetext);
+
+$frage = $row_fragetext['frage_text'];
+
+$sql_antworttext1 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = '$id' AND antwort_id = '1'";
+$result_antworttext1 = mysqli_query($conn, $sql_antworttext1);
+$row_antworttext1 = mysqli_fetch_assoc($result_antworttext1);
+
+$antwort1 = $row_antworttext1['antwort_text'];
+
+$sql_antworttext2 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = '$id' AND antwort_id = '2'";
+$result_antworttext2 = mysqli_query($conn, $sql_antworttext2);
+$row_antworttext2 = mysqli_fetch_assoc($result_antworttext2);
+
+$antwort2 = $row_antworttext2['antwort_text'];
+
+$sql_antworttext3 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = '$id' AND antwort_id = '3'";
+$result_antworttext3 = mysqli_query($conn, $sql_antworttext3);
+$row_antworttext3 = mysqli_fetch_assoc($result_antworttext3);
+
+$antwort3 = $row_antworttext3['antwort_text'];
 echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '">';
 // Hier werden die Fragen und Antworten dynamisch generiert
 // Beispiel
 echo "<p>$frage</p>";
 echo '<ul>';
-echo '<li><input type="radio" name="1" value="1"> Berlin</span></li>';
-echo '<li><input type="radio" name="1" value="2"> London</li>';
-echo '<li><input type="radio" name="1" value="3"> <span class="richtigeAntwort">Paris</li>';
+echo "<li><input type='radio' name='1' value='1'> $antwort1</span></li>";
+echo "<li><input type='radio' name='1' value='2'> $antwort2</li>";
+echo "<li><input type='radio' name='1' value='3'> <span class='richtigeAntwort'>$antwort3</li>";
 echo '</ul>';
 // Weitere Fragen und Antworten hier einfügen
 echo '<input type="hidden" id="countdownValue" name="countdownValue" value="">';
@@ -88,7 +131,9 @@ echo '<p id="countdownTimer"></p>';
 echo '<p id="ergebnis"></p>';
 echo '</form>';
 
+if ($id >= 21){
 
+}
 
 // Verbindung schließen
 $conn->close();

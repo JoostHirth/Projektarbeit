@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 14. Apr 2024 um 15:42
+-- Erstellungszeit: 15. Apr 2024 um 19:47
 -- Server-Version: 10.4.32-MariaDB
 -- PHP-Version: 8.2.12
 
@@ -72,15 +72,50 @@ INSERT INTO `quiz_antwort` (`antwort_id`, `frage_id`, `antwort_text`, `korrekt`)
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `quiz_antworten1`
+-- Tabellenstruktur für Tabelle `quiz_antwort2`
 --
 
-CREATE TABLE `quiz_antworten1` (
+CREATE TABLE `quiz_antwort2` (
   `antwort_id` int(11) NOT NULL,
   `frage_id` int(11) NOT NULL,
   `antwort_text` varchar(255) NOT NULL,
   `korrekt` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `quiz_antwort3`
+--
+
+CREATE TABLE `quiz_antwort3` (
+  `antwort_id` int(11) NOT NULL,
+  `frage_id` int(11) NOT NULL,
+  `antwort_text` varchar(255) NOT NULL,
+  `korrekt` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `quiz_antwort4`
+--
+
+CREATE TABLE `quiz_antwort4` (
+  `antwort_id` int(11) NOT NULL,
+  `frage_id` int(11) NOT NULL,
+  `antwort_text` varchar(255) NOT NULL,
+  `korrekt` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Daten für Tabelle `quiz_antwort4`
+--
+
+INSERT INTO `quiz_antwort4` (`antwort_id`, `frage_id`, `antwort_text`, `korrekt`) VALUES
+(1, 1, 'Kupfer', 0),
+(2, 1, 'Aluminium', 0),
+(3, 1, 'Kunststoff ', 1);
 
 -- --------------------------------------------------------
 
@@ -103,13 +138,44 @@ INSERT INTO `quiz_frage` (`frage_id`, `frage_text`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `quiz_fragen1`
+-- Tabellenstruktur für Tabelle `quiz_frage2`
 --
 
-CREATE TABLE `quiz_fragen1` (
+CREATE TABLE `quiz_frage2` (
   `frage_id` int(11) NOT NULL,
   `frage_text` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `quiz_frage3`
+--
+
+CREATE TABLE `quiz_frage3` (
+  `frage_id` int(11) NOT NULL,
+  `frage_text` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `quiz_frage4`
+--
+
+CREATE TABLE `quiz_frage4` (
+  `frage_id` int(11) NOT NULL,
+  `frage_text` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Daten für Tabelle `quiz_frage4`
+--
+
+INSERT INTO `quiz_frage4` (`frage_id`, `frage_text`) VALUES
+(1, 'Welches Material wird typischerweise als Isolator in elektrischen Leitungen verwendet?'),
+(2, 'Welcher Parameter misst die Stärke eines elektrischen Stroms?'),
+(3, 'Welches Gesetz beschreibt das Verhältnis zwischen Spannung, Stromstärke und Widerstand in einem elektrischen Stromkreis?');
 
 -- --------------------------------------------------------
 
