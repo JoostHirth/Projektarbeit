@@ -27,7 +27,12 @@ if ($result && mysqli_num_rows($result) > 0) {
     echo "<p>Gesamtpunkte: " . $row['gesamt_punkte'] . "</p>";
     echo "<p>Richtig beantwortet: " . $row['richtig_beantwortet'] . "</p>";
     echo "<p>Gesamt beantwortet: " . $row['gesamt_fragen'] . "</p>";
-    echo "<p>WR: " . ( $row['richtig_beantwortet'] /  $row['gesamt_fragen'])*100  ."%</p>";
+    if ($row['gesamt_fragen']> 0){
+        echo "<p>WR: " . ( $row['richtig_beantwortet'] /  $row['gesamt_fragen'])*100  ."%</p>";
+    }
+    else {
+        echo "";
+    }
 } else {
     echo "Keine Statistiken verfügbar.";
 }

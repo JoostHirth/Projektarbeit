@@ -67,6 +67,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+$sql = "SELECT frage_text FROM quiz_frage WHERE frage_id = '1'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+
+$frage = $row['frage_text'];
+echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '">';
+// Hier werden die Fragen und Antworten dynamisch generiert
+// Beispiel
+echo "<p>$frage</p>";
+echo '<ul>';
+echo '<li><input type="radio" name="1" value="1"> Berlin</span></li>';
+echo '<li><input type="radio" name="1" value="2"> London</li>';
+echo '<li><input type="radio" name="1" value="3"> <span class="richtigeAntwort">Paris</li>';
+echo '</ul>';
+// Weitere Fragen und Antworten hier einfügen
+echo '<input type="hidden" id="countdownValue" name="countdownValue" value="">';
+echo '<input type="submit" id="submitBtn" value="Antworten überprüfen">';
+echo '<p id="countdownTimer"></p>';
+echo '<p id="ergebnis"></p>';
+echo '</form>';
 
 
 
@@ -107,21 +127,3 @@ window.onload = function() {
 };
 
 </script>
-
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-    <!-- Hier werden die Fragen und Antworten dynamisch generiert -->
-    <!-- Beispiel -->
-    <p>Frage 1: Was ist die Hauptstadt von Frankreich?</p>
-    <ul>
-        <li><input type="radio" name="1" value="1"> Berlin</span></li>
-        <li><input type="radio" name="1" value="2"> London</li>
-        <li><input type="radio" name="1" value="3"> <span class="richtigeAntwort">Paris</li>
-    </ul>
-
-    <!-- Weitere Fragen und Antworten hier einfügen -->
-    <input type="hidden" id="countdownValue" name="countdownValue" value="">
-    <input type="submit" id="submitBtn" value="Antworten überprüfen">
-    <p id="countdownTimer"></p>
-    <p id="ergebnis"></p>
-
-</form>
