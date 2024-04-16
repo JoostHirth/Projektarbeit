@@ -1,0 +1,102 @@
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    background: url('slika.jpeg');
+    background-size: cover;
+    background-position: fill;
+    color:white;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%; /* Adjust width as needed */
+    margin-top: 20px;
+}
+
+.top-right {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.title{
+    font-weight: 700;
+    font-size:6rem;
+}
+.container1 {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    padding: 15px;
+    border:5px solid rgba(125, 125,125,0.5);    
+    border-radius:30px;
+    width: fit-content;
+    margin-top: 20px;
+}
+.quizs{
+    margin:10px;
+    padding:10px;
+    border-right: 5px solid plum;
+}
+.quizs h3{
+    font-size:36px;
+}
+.quizs ul {
+    list-style-type: none;
+}
+
+.quizs li {
+    margin-bottom: 10px;
+}
+.quizs a {
+    text-decoration: none;
+    color:white;
+    font-size: 28px;
+    font-weight: 500;
+}
+.top{
+    margin:10px;
+    padding:10px;
+    border:5px solid rgba(214, 211, 211, 0.5);    
+    border-radius:30px;
+}
+.top td{
+    padding: 7.5px;
+}
+.top th{
+    padding: 7.5px;
+
+}
+
+.sidebar{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position:absolute;
+    overflow: hidden;
+    top:0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background: #3949ab;
+    transition: all 0.4s;
+    background-color: rgba(0, 0, 0, 0.1);
+    font-size:25px;
+}
+.sidebar a{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration:underline;
+    color:white;
+}
+.sidebar i {
+    padding-left:20px;
+}
+

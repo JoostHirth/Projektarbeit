@@ -2,6 +2,7 @@
     margin:0;
     box-sizing: border-box;
     font-family: "Poppins",sans-serif;
+
 }
 body{
     display:flex;
@@ -68,7 +69,10 @@ body{
     display: block; 
     margin:50px 25px 50px 25px;
     text-align: center;
+    text-decoration: none;
+
 }
+
 
 .return{
     width: 33%;
@@ -126,3 +130,4 @@ body{
     border-bottom:5px solid rgba(1, 1,1,0.5);    
     
 }
+
