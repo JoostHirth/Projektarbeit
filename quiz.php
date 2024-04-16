@@ -9,11 +9,11 @@ if ($conn->connect_error) {
 }
 
 function calculatePoints($countdown) {
-    return round($countdown , 0); // Punkteberechnung
+    return round($countdown , 0); 
 }
 
 $id = 1;
-$vorherige_id = $id;
+$vorherige_id = 0;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_SESSION['benutzername'])) {
         $benutzername = $_SESSION['benutzername'];
@@ -21,7 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     else {
         $benutzername = "Gast";
     }
-    // Schritt 4: Benutzerantworten erfassen (Annahme: POST-Daten werden verwendet)
     foreach ($_POST as $frage_id => $antwort_id) {
         $gesamt_punkte = "SELECT gesamt_punkte FROM userdaten WHERE username = '$benutzername'";
         $gesamt_punkteint = (int)$gesamt_punkte;
@@ -31,10 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $richtig_beantwortet = "SELECT richtig_beantwortet FROM userdaten WHERE username = '$benutzername'";
         $richtig_beantwortetint = (int)$richtig_beantwortet;
-
-        // Schritt 5: Antworten überprüfen
-        //$frage_id = mysqli_real_escape_string($conn, $frage_id); // Sicherheitsmaßnahme: SQL-Injektion verhindern
-        //$antwort_id = mysqli_real_escape_string($conn, $antwort_id); // Sicherheitsmaßnahme: SQL-Injektion verhindern
 
         $korrekte_antwort_query = "SELECT korrekt FROM quiz_antwort WHERE frage_id = '$frage_id' AND antwort_id = '$antwort_id'";
         $korrekte_antwort_result = mysqli_query($conn, $korrekte_antwort_query);
@@ -56,13 +51,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $richtig_beantwortetint ++; 
                 $sql_richtig = "UPDATE userdaten SET richtig_beantwortet = richtig_beantwortet + '$richtig_beantwortetint' WHERE username = '$benutzername'";
                 mysqli_query($conn, $sql_richtig);
-                $id++; 
+                $id++;
+                $vorherige_id++; 
             } else {
                 echo "Die Antwort ist falsch!";
                 $gesamt_fragenint ++; 
                 $sql_fragen = "UPDATE userdaten SET gesamt_fragen = gesamt_fragen + '$gesamt_fragenint' WHERE username = '$benutzername'";
                 mysqli_query($conn, $sql_fragen);
-            }   $id++;
+                $id++;
+                $vorherige_id++;
+            }  
+
         } else {
             echo "Die Antwort wurde nicht gefunden!";
         }
@@ -91,32 +90,23 @@ switch ($thema) {
 }
 
 if ($id > $vorherige_id || $id == 1) {
-    $sql_fragetext = "SELECT frage_text FROM $frage_thema WHERE frage_id = '$id'";
+    $sql_fragetext = "SELECT frage_text FROM $frage_thema WHERE frage_id = $id";
     $result_fragetext = mysqli_query($conn, $sql_fragetext);
-    $row_fragetext = mysqli_fetch_assoc($result_fragetext);
+    $frage = mysqli_fetch_assoc($result_fragetext)['frage_text'];
     
-    $frage = $row_fragetext['frage_text'];
-    
-    $sql_antworttext1 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = '1'";
+    $sql_antworttext1 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 1";
     $result_antworttext1 = mysqli_query($conn, $sql_antworttext1);
-    print_r($result_antworttext1);
-    $row_antworttext1 = mysqli_fetch_assoc($result_antworttext1);
+    $antwort1 = mysqli_fetch_assoc($result_antworttext1)['antwort_text'];
     
-    $antwort1 = $row_antworttext1['antwort_text'];
-    
-    $sql_antworttext2 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = '$id' AND antwort_id = '2'";
+    $sql_antworttext2 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 2";
     $result_antworttext2 = mysqli_query($conn, $sql_antworttext2);
-    $row_antworttext2 = mysqli_fetch_assoc($result_antworttext2);
+    $antwort2 = mysqli_fetch_assoc($result_antworttext2)['antwort_text'];
     
-    $antwort2 = $row_antworttext2['antwort_text'];
-    
-    $sql_antworttext3 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = '$id' AND antwort_id = '3'";
+    $sql_antworttext3 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 3";
     $result_antworttext3 = mysqli_query($conn, $sql_antworttext3);
-    $row_antworttext3 = mysqli_fetch_assoc($result_antworttext3);
-    
-    $antwort3 = $row_antworttext3['antwort_text'];
+    $antwort3 = mysqli_fetch_assoc($result_antworttext3)['antwort_text'];
+
     if($id>1){
-        sleep(3);
         echo "<script>";
         echo "startTimer();";
         echo "</script>";
@@ -135,13 +125,9 @@ if ($id > $vorherige_id || $id == 1) {
             echo '<p id="ergebnis"></p>';
             echo '</form>';
         }
-        else{
-            echo "quiz beeendet";
-            echo "<p><a href='hauptseite.htm'>Zurück zur Hauptseite</a> </p>";
-        }
     }
     else{
-        echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '">';
+       echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '">';
         echo "<p>$frage</p>";
         echo '<ul>';
         echo "<li><input type='radio' name='1' value='1'> $antwort1</li>";
