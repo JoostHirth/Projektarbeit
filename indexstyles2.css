@@ -12,23 +12,20 @@ body{
     background-size: cover;
     background-position: fill;
 }
-
-
 .container2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 120%;
+    height: 100%;
     background:transparent;
-    color:white;
+    color:black;
     width:840px;
-    border:2px solid black;    
+    border:2px solid black;   
     border-radius:20px;
 }
 .login-form{
     margin: 20 10px;
 }
-
 .gast-form{
     border-left: 3px solid rgba(255,255,255,0.2);
     height: 100%;  
@@ -46,11 +43,12 @@ body{
     width: 420px;
     padding: 20px;
 }
-
-
+.container{
+    margin-top:100px;
+}
 .container .title {
     text-align: center;
-    color: white; 
+    color: black; 
     margin-bottom: 60px; 
 }
 .container h1{
@@ -61,20 +59,17 @@ body{
     font-size: 3.5rem; 
     font-weight: bold;
 }
-
 .login-form button,
 .gast-form button,
 .register-form button {
     display: block; 
     margin-top: 20px; 
-    margin: 20px auto;
     text-align: center;
 }
 .login-form input,
 .gast-form input,
 .register-form input {
     display: block;
-    margin: 0 auto;
     text-align: center;
 }
 .container2 h2{
@@ -89,8 +84,6 @@ body{
     text-align:center;
 
 }
-
-
 .container2 .input-box{
     width:100%;
     height:50px;
@@ -107,9 +100,8 @@ body{
     color:white;
 }
 .input-box input::placeholder{
-    color:white;
+    color:black;
 }
-
 .login-form .btn,
 .register-form .btn,
 .gast-form .btn{
