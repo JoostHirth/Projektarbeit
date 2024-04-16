@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 15. Apr 2024 um 19:47
+-- Erstellungszeit: 16. Apr 2024 um 12:12
 -- Server-Version: 10.4.32-MariaDB
 -- PHP-Version: 8.2.12
 
@@ -115,7 +115,10 @@ CREATE TABLE `quiz_antwort4` (
 INSERT INTO `quiz_antwort4` (`antwort_id`, `frage_id`, `antwort_text`, `korrekt`) VALUES
 (1, 1, 'Kupfer', 0),
 (2, 1, 'Aluminium', 0),
-(3, 1, 'Kunststoff ', 1);
+(3, 1, 'Kunststoff ', 1),
+(1, 2, 'Spannung', 0),
+(2, 2, 'Widerstand', 0),
+(3, 2, 'Stromstärke ', 1);
 
 -- --------------------------------------------------------
 
@@ -198,7 +201,8 @@ CREATE TABLE `userdaten` (
 
 INSERT INTO `userdaten` (`ID`, `username`, `passwort`, `gesamt_punkte`, `richtig_beantwortet`, `gesamt_fragen`) VALUES
 (1, 'ghjkl', '$2y$10$Y4A5fcdLb2c9hbYyygX7guZCs21pKx2/XspCxjj0hmlxVKrif2HKe', 3927, 1, 2),
-(3, 'qwer', '$2y$10$ZLsoa98D6lFNo/0Htv.cL.SsPr9tyCApU2naZcifcdu1wGHtWHWZe', 7924, 8, 10);
+(3, 'qwer', '$2y$10$ZLsoa98D6lFNo/0Htv.cL.SsPr9tyCApU2naZcifcdu1wGHtWHWZe', 7924, 8, 10),
+(4, 'hfjkdb', '$2y$10$iEk4n3cZipEZWBcmASS9C.26DiScAchc8h5exEPJcudvB/FtVZQz.', 8565, 16, 18);
 
 --
 -- Indizes der exportierten Tabellen
@@ -258,7 +262,7 @@ ALTER TABLE `quiz_frage`
 -- AUTO_INCREMENT für Tabelle `userdaten`
 --
 ALTER TABLE `userdaten`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints der exportierten Tabellen
