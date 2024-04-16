@@ -4,7 +4,6 @@ include 'config.php';
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verbindung überprüfen
 if ($conn->connect_error) {
     die("Verbindung fehlgeschlagen: " . $conn->connect_error);
 }
@@ -14,7 +13,7 @@ function calculatePoints($countdown) {
 }
 
 $id = 1;
-
+$vorherige_id = $id;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_SESSION['benutzername'])) {
         $benutzername = $_SESSION['benutzername'];
@@ -34,8 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $richtig_beantwortetint = (int)$richtig_beantwortet;
 
         // Schritt 5: Antworten überprüfen
-        $frage_id = mysqli_real_escape_string($conn, $frage_id); // Sicherheitsmaßnahme: SQL-Injektion verhindern
-        $antwort_id = mysqli_real_escape_string($conn, $antwort_id); // Sicherheitsmaßnahme: SQL-Injektion verhindern
+        //$frage_id = mysqli_real_escape_string($conn, $frage_id); // Sicherheitsmaßnahme: SQL-Injektion verhindern
+        //$antwort_id = mysqli_real_escape_string($conn, $antwort_id); // Sicherheitsmaßnahme: SQL-Injektion verhindern
 
         $korrekte_antwort_query = "SELECT korrekt FROM quiz_antwort WHERE frage_id = '$frage_id' AND antwort_id = '$antwort_id'";
         $korrekte_antwort_result = mysqli_query($conn, $korrekte_antwort_query);
@@ -91,48 +90,70 @@ switch ($thema) {
         break;
 }
 
-
-$sql_fragetext = "SELECT frage_text FROM $frage_thema WHERE frage_id = '$id'";
-$result_fragetext = mysqli_query($conn, $sql_fragetext);
-$row_fragetext = mysqli_fetch_assoc($result_fragetext);
-
-$frage = $row_fragetext['frage_text'];
-
-$sql_antworttext1 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = '$id' AND antwort_id = '1'";
-$result_antworttext1 = mysqli_query($conn, $sql_antworttext1);
-$row_antworttext1 = mysqli_fetch_assoc($result_antworttext1);
-
-$antwort1 = $row_antworttext1['antwort_text'];
-
-$sql_antworttext2 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = '$id' AND antwort_id = '2'";
-$result_antworttext2 = mysqli_query($conn, $sql_antworttext2);
-$row_antworttext2 = mysqli_fetch_assoc($result_antworttext2);
-
-$antwort2 = $row_antworttext2['antwort_text'];
-
-$sql_antworttext3 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = '$id' AND antwort_id = '3'";
-$result_antworttext3 = mysqli_query($conn, $sql_antworttext3);
-$row_antworttext3 = mysqli_fetch_assoc($result_antworttext3);
-
-$antwort3 = $row_antworttext3['antwort_text'];
-echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '">';
-// Hier werden die Fragen und Antworten dynamisch generiert
-// Beispiel
-echo "<p>$frage</p>";
-echo '<ul>';
-echo "<li><input type='radio' name='1' value='1'> $antwort1</span></li>";
-echo "<li><input type='radio' name='1' value='2'> $antwort2</li>";
-echo "<li><input type='radio' name='1' value='3'> <span class='richtigeAntwort'>$antwort3</li>";
-echo '</ul>';
-// Weitere Fragen und Antworten hier einfügen
-echo '<input type="hidden" id="countdownValue" name="countdownValue" value="">';
-echo '<input type="submit" id="submitBtn" value="Antworten überprüfen">';
-echo '<p id="countdownTimer"></p>';
-echo '<p id="ergebnis"></p>';
-echo '</form>';
-
-if ($id >= 21){
-
+if ($id > $vorherige_id || $id == 1) {
+    $sql_fragetext = "SELECT frage_text FROM $frage_thema WHERE frage_id = '$id'";
+    $result_fragetext = mysqli_query($conn, $sql_fragetext);
+    $row_fragetext = mysqli_fetch_assoc($result_fragetext);
+    
+    $frage = $row_fragetext['frage_text'];
+    
+    $sql_antworttext1 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = '$id' AND antwort_id = '1'";
+    $result_antworttext1 = mysqli_query($conn, $sql_antworttext1);
+    $row_antworttext1 = mysqli_fetch_assoc($result_antworttext1);
+    
+    $antwort1 = $row_antworttext1['antwort_text'];
+    
+    $sql_antworttext2 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = '$id' AND antwort_id = '2'";
+    $result_antworttext2 = mysqli_query($conn, $sql_antworttext2);
+    $row_antworttext2 = mysqli_fetch_assoc($result_antworttext2);
+    
+    $antwort2 = $row_antworttext2['antwort_text'];
+    
+    $sql_antworttext3 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = '$id' AND antwort_id = '3'";
+    $result_antworttext3 = mysqli_query($conn, $sql_antworttext3);
+    $row_antworttext3 = mysqli_fetch_assoc($result_antworttext3);
+    
+    $antwort3 = $row_antworttext3['antwort_text'];
+    if($id>1){
+        sleep(3);
+        echo "<script>";
+        echo "startTimer();";
+        echo "</script>";
+        if ($id <= 20){
+            echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '">';
+            echo "<p>$frage</p>";
+            echo '<ul>';
+            echo "<li><input type='radio' name='1' value='1'> $antwort1</li>";
+            echo "<li><input type='radio' name='1' value='2'> $antwort2</li>";
+            echo "<li><input type='radio' name='1' value='3'> $antwort3</li>";
+            echo '</ul>';
+            // Weitere Fragen und Antworten hier einfügen
+            echo '<input type="hidden" id="countdownValue" name="countdownValue" value="">';
+            echo '<input type="submit" id="submitBtn" value="Antworten überprüfen">';
+            echo '<p id="countdownTimer"></p>';
+            echo '<p id="ergebnis"></p>';
+            echo '</form>';
+        }
+        else{
+            echo "quiz beeendet";
+            echo "<p><a href='hauptseite.htm'>Zurück zur Hauptseite</a> </p>";
+        }
+    }
+    else{
+        echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '">';
+        echo "<p>$frage</p>";
+        echo '<ul>';
+        echo "<li><input type='radio' name='1' value='1'> $antwort1</li>";
+        echo "<li><input type='radio' name='1' value='2'> $antwort2</li>";
+        echo "<li><input type='radio' name='1' value='3'> $antwort3</li>";
+        echo '</ul>';
+        // Weitere Fragen und Antworten hier einfügen
+        echo '<input type="hidden" id="countdownValue" name="countdownValue" value="">';
+        echo '<input type="submit" id="submitBtn" value="Antworten überprüfen">';
+        echo '<p id="countdownTimer"></p>';
+        echo '<p id="ergebnis"></p>';
+        echo '</form>';
+    }
 }
 
 // Verbindung schließen
@@ -141,9 +162,13 @@ $conn->close();
 
 <script>
 window.onload = function() {
+    startTimer(); // Timer starten, wenn die Seite geladen wird
+};
+
+function startTimer() {
     // Initialisierung: Submit-Button deaktivieren
     document.getElementById("submitBtn").disabled = true;
-    var fullPoints = 1000; 
+    var fullPoints = 1000;
     var countdown = 1000; // Start Countdown-Wert
 
     // Countdown für die erste Verzögerung von 3 Sekunden
@@ -154,21 +179,15 @@ window.onload = function() {
         // Starte den Countdown für die zweite Verzögerung von 10 Sekunden
         var countdownInterval = setInterval(function() {
             countdown--;
-            document.getElementById("countdownTimer").innerHTML = "Nächster Versuch in " + Math.round(countdown/100, 0) + " Sekunden";
+            document.getElementById("countdownTimer").innerHTML = "Nächster Versuch in " + Math.round(countdown / 100, 0) + " Sekunden";
             document.getElementById("countdownValue").value = countdown; // Countdown-Wert aktualisieren
             if (countdown <= 0) {
                 clearInterval(countdownInterval); // Countdown beenden
                 document.getElementById("countdownTimer").innerHTML = ""; // Timer ausblenden
                 document.getElementById("submitBtn").disabled = true; // Submit-Button deaktivieren
                 document.getElementById("countdownValue").value = 0; // Countdown-Wert auf 0 setzen
-
-                // Hier können Sie die richtige Antwort farblich anzeigen
-                // Annahme: Die richtige Antwort ist mit einer Klasse "richtigeAntwort" gekennzeichnet
-                document.querySelector('.richtigeAntwort').style.color = 'green';
             }
         }, 10); // Update alle 1000 Millisekunden (1 Sekunde)
     }, 3000); // Starte den Countdown nach 3 Sekunden
-
-};
-
+}
 </script>
