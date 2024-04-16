@@ -1,0 +1,83 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    color:white;
+    background: url('slika.jpeg');
+    background-size: cover;
+    background-position: fill;
+}
+.statistics-wrapper {
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    margin:100px 500px 25px 25px;
+    padding:100px;   
+    border:2px solid black;  
+    border-radius:30px;
+}
+.statistics-wrapper span{
+    font-size:25px;
+}
+.statistics-wrapper p {
+    font-size: 25px;
+}
+.statistics-wrapper h3 {
+    font-size: 50px;
+    font-weight: 600;
+}
+
+
+.sidebar{
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:absolute;
+    overflow: hidden;
+    top:0;
+    right: 0;
+    width: 250px;
+    height: 100%;
+    background: #3949ab;
+    transition: all 0.4s;
+    background-color: rgba(0, 0, 0, 0.3);
+    
+    
+}
+.sidebar > button{
+    background: transparent;
+    border:0;
+    padding:0;
+    cursor:pointer;
+    border:2px solid rgba(1, 1,1,0.5);    
+    border-radius:20px;
+    color:white;
+    width: 250px;
+    height:50px;
+    font-weight: 700;
+    font-size:15px;
+
+}
+.sidebar > span{
+    position: absolute;
+    top: 0;
+    left: 5; 
+    color:black;
+    font-weight: 700;
+    font-size: 30px;
+    border-bottom:5px solid rgba(1, 1,1,0.5);    
+}
+.nez a{
+    text-decoration: none;
+    color:white;
+}
+.nez {
+    border:2px solid rgba(1, 1,1,0.5);    
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius:20px;
+    padding:10px;
+    width: 100%;
+} 

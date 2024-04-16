@@ -2,19 +2,18 @@
     margin:0;
     box-sizing: border-box;
     font-family: "Poppins",sans-serif;
-
 }
+
 body{
     display:flex;
     justify-content: center;
     align-items: center;
     background:url('slika.jpeg');
-    background-color: white;
     background-size: cover;
-    background-position: center;
-    padding:120px;
+    background-position: center;}
+.container{
+    margin-top:100px;
 }
-
 .container2 {
     padding: 5px;
     margin:5px;
@@ -30,6 +29,24 @@ body{
     background-color: transparent;
 }
 .text{
+    border-right:2px solid rgba(1, 1,1,0.5);    
+    
+}
+.button1 a{
+    text-decoration: none;
+    color:white;
+
+}
+.register1 a{
+    text-decoration: none;
+    color:white;
+
+}
+.login1 a{
+    text-decoration: none;
+    color:white;
+}
+text{
     display: flex;
     justify-content: center; 
     align-items: center; 
@@ -44,7 +61,6 @@ body{
     padding: 15px;
     margin:15px;
 }
-
 .text h2{
     font-size: 5rem; 
     font-weight: bold;
@@ -70,9 +86,63 @@ body{
     margin:50px 25px 50px 25px;
     text-align: center;
     text-decoration: none;
-
+}
+.return{
+    width: 33%;
+    height:45px;
+    background:white;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0,0,0, 0.1);
+    cursor: pointer;
+    color:#333;
+    font-weight: 600;
 }
 
+.sidebar{
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:absolute;
+    overflow: hidden;
+    top:0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background: #3949ab;
+    transition: all 0.4s;
+    background-color: rgba(0, 0, 0, 0.1);
+    
+    
+}
+.sidebar > button{
+    background: transparent;
+    border:0;
+    padding:0;
+    cursor:pointer;
+    border:2px solid rgba(1, 1,1,0.5);    
+    border-radius:20px;
+    color:white;
+    width: 250px;
+    height:50px;
+    font-weight: 700;
+    font-size:15px;
+
+}
+.sidebar > span{
+    position: absolute;
+    top: 0;
+    left: 5; 
+    color:white;
+    font-weight: 700;
+    font-size: 30px;
+    margin-bottom: 10px;
+    margin-top:10px;    
+    border-bottom:5px solid rgba(1, 1,1,0.5);    
+    
+}
 
 .return{
     width: 33%;
