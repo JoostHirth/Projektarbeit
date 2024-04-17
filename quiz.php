@@ -14,6 +14,10 @@ function calculatePoints($countdown) {
 
 $id = 1;
 $vorherige_id = 0;
+echo "id = $id";
+echo"thema 1";
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_SESSION['benutzername'])) {
         $benutzername = $_SESSION['benutzername'];
@@ -52,7 +56,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $sql_richtig = "UPDATE userdaten SET richtig_beantwortet = richtig_beantwortet + '$richtig_beantwortetint' WHERE username = '$benutzername'";
                 mysqli_query($conn, $sql_richtig);
                 $id++;
-                $vorherige_id++; 
+                $vorherige_id++;
+                $thema++; 
+                $thema--; 
+
             } else {
                 echo "Die Antwort ist falsch!";
                 $gesamt_fragenint ++; 
@@ -67,8 +74,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-$thema = $_GET['thema'] ?? 1;
 echo "$thema";
+echo "$id";
+echo "$vorherige_id";
+if ($id == 1) {
+    $thema = $_GET['thema'] ?? 1;
+    echo "thema  = if";
+    }
 
 switch ($thema) {
     case 1:
@@ -89,13 +101,21 @@ switch ($thema) {
         break;
 }
 
-$sql_fragetext = "SELECT frage_text FROM $frage_thema WHERE frage_id = $id";
+$sql_fragetext = "SELECT frage_text FROM $frage_thema WHERE frage_id = $id"; 
 $result_fragetext = mysqli_query($conn, $sql_fragetext);
-$frage = mysqli_fetch_assoc($result_fragetext)['frage_text'];
+$frage ="";
+if( $row=$result_fragetext->fetch_assoc())
+{
+    //$result_fragetext->fetch_row();
+    $frage =$row["frage_text"];
+}
+$result_fragetext->close();
+//$frage = mysqli_fetch_assoc($result_fragetext)['frage_text'];
 
 $sql_antworttext1 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 1";
 $result_antworttext1 = mysqli_query($conn, $sql_antworttext1);
-$antwort1 = mysqli_fetch_assoc($result_antworttext1)['antwort_text'];
+$antwort1 = $result_antworttext1->fetch_assoc()['antwort_text'];
+$result_antworttext1->close();
 
 $sql_antworttext2 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 2";
 $result_antworttext2 = mysqli_query($conn, $sql_antworttext2);
@@ -112,7 +132,7 @@ if ($id > $vorherige_id || $id == 1) {
         echo "startTimer();";
         echo "</script>";
         if ($id <= 20){
-            echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '">';
+            echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?thema=4">';
             echo "<p>$frage</p>";
             echo '<ul>';
             echo "<li><input type='radio' name='1' value='1'> $antwort1</li>";
