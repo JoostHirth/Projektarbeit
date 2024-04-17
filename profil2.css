@@ -13,8 +13,8 @@ body {
     justify-content: space-between;
     align-items: center;
     text-align: center;
-    margin:100px 500px 25px 25px;
-    padding:00px;   
+    margin:100px 250px 25px 25px;
+    padding:100px;   
     border:2px solid black;  
     border-radius:30px;
 }
@@ -22,7 +22,7 @@ body {
     font-size:25px;
 }
 .statistics-wrapper p {
-    font-size: 25px;
+    font-size: 30px;
 }
 .statistics-wrapper h3 {
     font-size: 50px;
