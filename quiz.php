@@ -89,22 +89,23 @@ switch ($thema) {
         break;
 }
 
+$sql_fragetext = "SELECT frage_text FROM $frage_thema WHERE frage_id = $id";
+$result_fragetext = mysqli_query($conn, $sql_fragetext);
+$frage = mysqli_fetch_assoc($result_fragetext)['frage_text'];
+
+$sql_antworttext1 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 1";
+$result_antworttext1 = mysqli_query($conn, $sql_antworttext1);
+$antwort1 = mysqli_fetch_assoc($result_antworttext1)['antwort_text'];
+
+$sql_antworttext2 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 2";
+$result_antworttext2 = mysqli_query($conn, $sql_antworttext2);
+$antwort2 = mysqli_fetch_assoc($result_antworttext2)['antwort_text'];
+
+$sql_antworttext3 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 3";
+$result_antworttext3 = mysqli_query($conn, $sql_antworttext3);
+$antwort3 = mysqli_fetch_assoc($result_antworttext3)['antwort_text'];
+
 if ($id > $vorherige_id || $id == 1) {
-    $sql_fragetext = "SELECT frage_text FROM $frage_thema WHERE frage_id = $id";
-    $result_fragetext = mysqli_query($conn, $sql_fragetext);
-    $frage = mysqli_fetch_assoc($result_fragetext)['frage_text'];
-    
-    $sql_antworttext1 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 1";
-    $result_antworttext1 = mysqli_query($conn, $sql_antworttext1);
-    $antwort1 = mysqli_fetch_assoc($result_antworttext1)['antwort_text'];
-    
-    $sql_antworttext2 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 2";
-    $result_antworttext2 = mysqli_query($conn, $sql_antworttext2);
-    $antwort2 = mysqli_fetch_assoc($result_antworttext2)['antwort_text'];
-    
-    $sql_antworttext3 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 3";
-    $result_antworttext3 = mysqli_query($conn, $sql_antworttext3);
-    $antwort3 = mysqli_fetch_assoc($result_antworttext3)['antwort_text'];
 
     if($id>1){
         echo "<script>";
