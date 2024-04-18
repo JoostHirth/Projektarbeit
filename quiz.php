@@ -11,7 +11,6 @@ if ($conn->connect_error) {
 function calculatePoints($countdown) {
     return round($countdown , 0); 
 }
-
 $frage_thema = "";
 $antwort_thema = "";
 
