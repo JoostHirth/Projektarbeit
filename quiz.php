@@ -12,11 +12,32 @@ function calculatePoints($countdown) {
     return round($countdown , 0); 
 }
 
-$id = 1;
-$vorherige_id = 0;
-echo "id = $id";
-echo"thema 1";
+$frage_thema = "";
+$antwort_thema = "";
 
+$id = isset($_GET['id']) ? intval($_GET['id']) : 1;
+$vorherige_id = isset($_GET['vorherige_id']) ? intval($_GET['vorherige_id']) : 0;
+if ($id == 1) {
+    $thema = $_GET['thema'] ?? 1;
+    switch ($thema) {
+        case 1:
+            $frage_thema = "quiz_frage";
+            $antwort_thema = "quiz_antwort";
+            break;
+        case 2:
+            $frage_thema = "quiz_frage2";
+            $antwort_thema = "quiz_antwort2";
+            break;
+        case 3:
+            $frage_thema = "quiz_frage3";
+            $antwort_thema = "quiz_antwort3";
+            break;
+        case 4:
+            $frage_thema = "quiz_frage4";
+            $antwort_thema = "quiz_antwort4";
+            break;
+    }
+    }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_SESSION['benutzername'])) {
@@ -43,9 +64,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $korrekt = $row['korrekt'];
             if ($korrekt == 1) {
                 echo "Die Antwort ist korrekt!";
-                $countdown = $_POST['countdownValue']; // Countdown-Wert auslesen
-                $points = calculatePoints($countdown); // Punkte berechnen
-                echo " Punkte: " . $points; // Punkte ausgeben
+                $countdown = $_POST['countdownValue']; 
+                $points = calculatePoints($countdown); 
+                echo " Punkte: " . $points;
                 $gesamt_punkteint += $points; 
                 $sql_punkte = "UPDATE userdaten SET gesamt_punkte = gesamt_punkte + '$gesamt_punkteint' WHERE username = '$benutzername'";
                 mysqli_query($conn, $sql_punkte);
@@ -57,9 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 mysqli_query($conn, $sql_richtig);
                 $id++;
                 $vorherige_id++;
-                $thema++; 
-                $thema--; 
-
             } else {
                 echo "Die Antwort ist falsch!";
                 $gesamt_fragenint ++; 
@@ -68,71 +86,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $id++;
                 $vorherige_id++;
             }  
-
-        } else {
+        } 
+        else {
             echo "Die Antwort wurde nicht gefunden!";
         }
     }
 }
-echo "$thema";
 echo "$id";
 echo "$vorherige_id";
-if ($id == 1) {
-    $thema = $_GET['thema'] ?? 1;
-    echo "thema  = if";
-    }
-
-switch ($thema) {
-    case 1:
-        $frage_thema = "quiz_frage";
-        $antwort_thema = "quiz_antwort";
-        break;
-    case 2:
-        $frage_thema = "quiz_frage2";
-        $antwort_thema = "quiz_antwort2";
-        break;
-    case 3:
-        $frage_thema = "quiz_frage3";
-        $antwort_thema = "quiz_antwort3";
-        break;
-    case 4:
-        $frage_thema = "quiz_frage4";
-        $antwort_thema = "quiz_antwort4";
-        break;
-}
-
-$sql_fragetext = "SELECT frage_text FROM $frage_thema WHERE frage_id = $id"; 
-$result_fragetext = mysqli_query($conn, $sql_fragetext);
-$frage ="";
-if( $row=$result_fragetext->fetch_assoc())
-{
-    //$result_fragetext->fetch_row();
-    $frage =$row["frage_text"];
-}
-$result_fragetext->close();
-//$frage = mysqli_fetch_assoc($result_fragetext)['frage_text'];
-
-$sql_antworttext1 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 1";
-$result_antworttext1 = mysqli_query($conn, $sql_antworttext1);
-$antwort1 = $result_antworttext1->fetch_assoc()['antwort_text'];
-$result_antworttext1->close();
-
-$sql_antworttext2 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 2";
-$result_antworttext2 = mysqli_query($conn, $sql_antworttext2);
-$antwort2 = mysqli_fetch_assoc($result_antworttext2)['antwort_text'];
-
-$sql_antworttext3 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 3";
-$result_antworttext3 = mysqli_query($conn, $sql_antworttext3);
-$antwort3 = mysqli_fetch_assoc($result_antworttext3)['antwort_text'];
 
 if ($id > $vorherige_id || $id == 1) {
+    $sql_fragetext = "SELECT frage_text FROM $frage_thema WHERE frage_id = $id"; 
+    $result_fragetext = mysqli_query($conn, $sql_fragetext);
+    $frage ="";
+    if( $row=$result_fragetext->fetch_assoc())
+    {
+        //$result_fragetext->fetch_row();
+        $frage =$row["frage_text"];
+    }
+    $result_fragetext->close();
+    //$frage = mysqli_fetch_assoc($result_fragetext)['frage_text'];
+
+    $sql_antworttext1 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 1";
+    $result_antworttext1 = mysqli_query($conn, $sql_antworttext1);
+    $antwort1 = $result_antworttext1->fetch_assoc()['antwort_text'];
+    $result_antworttext1->close();
+
+    $sql_antworttext2 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 2";
+    $result_antworttext2 = mysqli_query($conn, $sql_antworttext2);
+    $antwort2 = mysqli_fetch_assoc($result_antworttext2)['antwort_text'];
+
+    $sql_antworttext3 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 3";
+    $result_antworttext3 = mysqli_query($conn, $sql_antworttext3);
+    $antwort3 = mysqli_fetch_assoc($result_antworttext3)['antwort_text'];
 
     if($id>1){
         echo "<script>";
         echo "startTimer();";
         echo "</script>";
         if ($id <= 20){
-            echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?thema=4">';
+            echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?thema=' . $thema . '&id=' . $id . '&vorherige_id=' . $vorherige_id . '">';
+
             echo "<p>$frage</p>";
             echo '<ul>';
             echo "<li><input type='radio' name='1' value='1'> $antwort1</li>";
@@ -148,7 +142,8 @@ if ($id > $vorherige_id || $id == 1) {
         }
     }
     else{
-       echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '">';
+        echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?thema=' . $thema . '&id=' . $id . '&vorherige_id=' . $vorherige_id . '">';
+
         echo "<p>$frage</p>";
         echo '<ul>';
         echo "<li><input type='radio' name='1' value='1'> $antwort1</li>";
