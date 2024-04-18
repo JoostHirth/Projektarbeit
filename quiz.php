@@ -13,13 +13,10 @@ function calculatePoints($countdown) {
 }
 $frage_thema = "";
 $antwort_thema = "";
-
 $id = isset($_GET['id']) ? intval($_GET['id']) : 1;
 $vorherige_id = isset($_GET['vorherige_id']) ? intval($_GET['vorherige_id']) : 0;
-if ($id ==1 ){
-    $thema = $_GET['thema'] ?? 1;
-
-}
+$thema = $_GET['thema'] ?? 1;
+$frage_id = $id;
 switch ($thema) {
     case 1:
         $frage_thema = "quiz_frage";
@@ -47,17 +44,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     else {
         $benutzername = "Gast";
     }
-    foreach ($_POST as $frage_id => $antwort_id) {
-        $gesamt_punkte = "SELECT gesamt_punkte FROM userdaten WHERE username = '$benutzername'";
-        $gesamt_punkteint = (int)$gesamt_punkte;
+    $antwort_id = htmlspecialchars($_POST['1']);
+    //foreach ($_POST as $frage_id => $antwort_id) {
+        echo "$frage_id, $antwort_id";
 
-        $gesamt_fragen = "SELECT gesamt_fragen FROM userdaten WHERE username = '$benutzername'";
-        $gesamt_fragenint = (int)$gesamt_fragen;
-
-        $richtig_beantwortet = "SELECT richtig_beantwortet FROM userdaten WHERE username = '$benutzername'";
-        $richtig_beantwortetint = (int)$richtig_beantwortet;
-
-        $korrekte_antwort_query = "SELECT korrekt FROM quiz_antwort WHERE frage_id = '$frage_id' AND antwort_id = '$antwort_id'";
+        $korrekte_antwort_query = "SELECT korrekt FROM $antwort_thema WHERE frage_id = '$frage_id' AND antwort_id = '$antwort_id'";
         $korrekte_antwort_result = mysqli_query($conn, $korrekte_antwort_query);
 
         if (mysqli_num_rows($korrekte_antwort_result) > 0) {
@@ -68,14 +59,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $countdown = $_POST['countdownValue']; 
                 $points = calculatePoints($countdown); 
                 echo " Punkte: " . $points;
-                $gesamt_punkteint += $points; 
-                $sql_punkte = "UPDATE userdaten SET gesamt_punkte = gesamt_punkte + '$gesamt_punkteint' WHERE username = '$benutzername'";
+                $sql_punkte = "UPDATE userdaten SET gesamt_punkte = gesamt_punkte + '$points' WHERE username = '$benutzername'";
                 mysqli_query($conn, $sql_punkte);
-                $gesamt_fragenint ++; 
-                $sql_fragen = "UPDATE userdaten SET gesamt_fragen = gesamt_fragen + '$gesamt_fragenint' WHERE username = '$benutzername'";
+                $sql_fragen = "UPDATE userdaten SET gesamt_fragen = gesamt_fragen + 1 WHERE username = '$benutzername'";
                 mysqli_query($conn, $sql_fragen);
-                $richtig_beantwortetint ++; 
-                $sql_richtig = "UPDATE userdaten SET richtig_beantwortet = richtig_beantwortet + '$richtig_beantwortetint' WHERE username = '$benutzername'";
+                $sql_richtig = "UPDATE userdaten SET richtig_beantwortet = richtig_beantwortet + 1 WHERE username = '$benutzername'";
                 mysqli_query($conn, $sql_richtig);
                 $id++;
                 $vorherige_id++;
@@ -91,41 +79,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         else {
             echo "Die Antwort wurde nicht gefunden!";
         }
-    }
+    
 }
 echo "$id";
 echo "$vorherige_id";
 
-if ($id > $vorherige_id || $id == 1) {
-    $sql_fragetext = "SELECT frage_text FROM $frage_thema WHERE frage_id = $id"; 
-    $result_fragetext = mysqli_query($conn, $sql_fragetext);
-    $frage ="";
-    if( $row=$result_fragetext->fetch_assoc())
-    {
-        //$result_fragetext->fetch_row();
-        $frage =$row["frage_text"];
-    }
-    $result_fragetext->close();
-    //$frage = mysqli_fetch_assoc($result_fragetext)['frage_text'];
+$sql_maxfragen = "SELECT max(frage_id) as max_id FROM $antwort_thema";
+        $sql_maxfragenresult = mysqli_query($conn, $sql_maxfragen);
+        $sql_maxfragenid = mysqli_fetch_assoc($sql_maxfragenresult)['max_id'];
+        echo "$sql_maxfragenid";
 
-    $sql_antworttext1 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 1";
-    $result_antworttext1 = mysqli_query($conn, $sql_antworttext1);
-    $antwort1 = $result_antworttext1->fetch_assoc()['antwort_text'];
-    $result_antworttext1->close();
+if ($id <= $sql_maxfragenid){
+    if ($id > $vorherige_id || $id == 1) {
+        $sql_fragetext = "SELECT frage_text FROM $frage_thema WHERE frage_id = $id"; 
+        $result_fragetext = mysqli_query($conn, $sql_fragetext);
+        $frage ="";
+        if( $row=$result_fragetext->fetch_assoc())
+        {
+            //$result_fragetext->fetch_row();
+            $frage =$row["frage_text"];
+        }
+        $result_fragetext->close();
+        //$frage = mysqli_fetch_assoc($result_fragetext)['frage_text'];
 
-    $sql_antworttext2 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 2";
-    $result_antworttext2 = mysqli_query($conn, $sql_antworttext2);
-    $antwort2 = mysqli_fetch_assoc($result_antworttext2)['antwort_text'];
+        $sql_antworttext1 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 1";
+        $result_antworttext1 = mysqli_query($conn, $sql_antworttext1);
+        $antwort1 = $result_antworttext1->fetch_assoc()['antwort_text'];
+        $result_antworttext1->close();
 
-    $sql_antworttext3 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 3";
-    $result_antworttext3 = mysqli_query($conn, $sql_antworttext3);
-    $antwort3 = mysqli_fetch_assoc($result_antworttext3)['antwort_text'];
+        $sql_antworttext2 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 2";
+        $result_antworttext2 = mysqli_query($conn, $sql_antworttext2);
+        $antwort2 = mysqli_fetch_assoc($result_antworttext2)['antwort_text'];
 
-    if($id>1){
-        echo "<script>";
-        echo "startTimer();";
-        echo "</script>";
-        if ($id <= 20){
+        $sql_antworttext3 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 3";
+        $result_antworttext3 = mysqli_query($conn, $sql_antworttext3);
+        $antwort3 = mysqli_fetch_assoc($result_antworttext3)['antwort_text'];
+
+        
+
+        if($id>1){
+            echo "<script>";
+            echo "startTimer();";
+            echo "</script>";
+            
+            echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?thema=' . $thema . '&id=' . $id . '&vorherige_id=' . $vorherige_id . '">';
+
+                echo "<p>$frage</p>";
+                echo '<ul>';
+                echo "<li><input type='radio' name='1' value='1'> $antwort1</li>";
+                echo "<li><input type='radio' name='1' value='2'> $antwort2</li>";
+                echo "<li><input type='radio' name='1' value='3'> $antwort3</li>";
+                echo '</ul>';
+
+                echo '<input type="hidden" id="countdownValue" name="countdownValue" value="">';
+                echo '<input type="submit" id="submitBtn"  value="Antworten überprüfen">';
+                echo '<p id="countdownTimer"></p>';
+                echo '<p id="ergebnis"></p>';
+                echo '</form>';
+            
+        }
+        else{
             echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?thema=' . $thema . '&id=' . $id . '&vorherige_id=' . $vorherige_id . '">';
 
             echo "<p>$frage</p>";
@@ -136,28 +149,15 @@ if ($id > $vorherige_id || $id == 1) {
             echo '</ul>';
             // Weitere Fragen und Antworten hier einfügen
             echo '<input type="hidden" id="countdownValue" name="countdownValue" value="">';
-            echo '<input type="submit" id="submitBtn" value="Antworten überprüfen">';
+            echo '<input type="submit" id="submitBtn"  value="Antworten überprüfen">';
             echo '<p id="countdownTimer"></p>';
             echo '<p id="ergebnis"></p>';
             echo '</form>';
         }
     }
-    else{
-        echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?thema=' . $thema . '&id=' . $id . '&vorherige_id=' . $vorherige_id . '">';
-
-        echo "<p>$frage</p>";
-        echo '<ul>';
-        echo "<li><input type='radio' name='1' value='1'> $antwort1</li>";
-        echo "<li><input type='radio' name='1' value='2'> $antwort2</li>";
-        echo "<li><input type='radio' name='1' value='3'> $antwort3</li>";
-        echo '</ul>';
-        // Weitere Fragen und Antworten hier einfügen
-        echo '<input type="hidden" id="countdownValue" name="countdownValue" value="">';
-        echo '<input type="submit" id="submitBtn" value="Antworten überprüfen">';
-        echo '<p id="countdownTimer"></p>';
-        echo '<p id="ergebnis"></p>';
-        echo '</form>';
-    }
+}
+else{
+    echo "sdcfgvhbjk";
 }
 
 // Verbindung schließen
