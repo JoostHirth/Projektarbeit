@@ -17,27 +17,29 @@ $antwort_thema = "";
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : 1;
 $vorherige_id = isset($_GET['vorherige_id']) ? intval($_GET['vorherige_id']) : 0;
-if ($id == 1) {
+if ($id ==1 ){
     $thema = $_GET['thema'] ?? 1;
-    switch ($thema) {
-        case 1:
-            $frage_thema = "quiz_frage";
-            $antwort_thema = "quiz_antwort";
-            break;
-        case 2:
-            $frage_thema = "quiz_frage2";
-            $antwort_thema = "quiz_antwort2";
-            break;
-        case 3:
-            $frage_thema = "quiz_frage3";
-            $antwort_thema = "quiz_antwort3";
-            break;
-        case 4:
-            $frage_thema = "quiz_frage4";
-            $antwort_thema = "quiz_antwort4";
-            break;
-    }
-    }
+
+}
+switch ($thema) {
+    case 1:
+        $frage_thema = "quiz_frage";
+        $antwort_thema = "quiz_antwort";
+        break;
+    case 2:
+        $frage_thema = "quiz_frage2";
+        $antwort_thema = "quiz_antwort2";
+        break;
+    case 3:
+        $frage_thema = "quiz_frage3";
+        $antwort_thema = "quiz_antwort3";
+        break;
+    case 4:
+        $frage_thema = "quiz_frage4";
+        $antwort_thema = "quiz_antwort4";
+        break;
+}
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_SESSION['benutzername'])) {
