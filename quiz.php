@@ -46,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $antwort_id = htmlspecialchars($_POST['1']);
     //foreach ($_POST as $frage_id => $antwort_id) {
-        echo "$frage_id, $antwort_id";
 
         $korrekte_antwort_query = "SELECT korrekt FROM $antwort_thema WHERE frage_id = '$frage_id' AND antwort_id = '$antwort_id'";
         $korrekte_antwort_result = mysqli_query($conn, $korrekte_antwort_query);
@@ -81,13 +80,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     
 }
-echo "$id";
-echo "$vorherige_id";
 
 $sql_maxfragen = "SELECT max(frage_id) as max_id FROM $antwort_thema";
         $sql_maxfragenresult = mysqli_query($conn, $sql_maxfragen);
         $sql_maxfragenid = mysqli_fetch_assoc($sql_maxfragenresult)['max_id'];
-        echo "$sql_maxfragenid";
 
 if ($id <= $sql_maxfragenid){
     if ($id > $vorherige_id || $id == 1) {
