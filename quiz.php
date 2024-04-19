@@ -66,13 +66,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 mysqli_query($conn, $sql_richtig);
                 $id++;
                 $vorherige_id++;
+                $beantwortet = true;
+                echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '">';
+                echo "<input type='submit' name='submit' value='Nächste Frage'>";
+                echo "</form>";
             } else {
                 echo "Die Antwort ist falsch!";
-                $gesamt_fragenint ++; 
-                $sql_fragen = "UPDATE userdaten SET gesamt_fragen = gesamt_fragen + '$gesamt_fragenint' WHERE username = '$benutzername'";
+                $sql_fragen = "UPDATE userdaten SET gesamt_fragen = gesamt_fragen + 1 WHERE username = '$benutzername'";
                 mysqli_query($conn, $sql_fragen);
                 $id++;
                 $vorherige_id++;
+                $beantwortet = true;
             }  
         } 
         else {
@@ -112,13 +116,30 @@ if ($id <= $sql_maxfragenid){
         $antwort3 = mysqli_fetch_assoc($result_antworttext3)['antwort_text'];
 
         
+        if(isset($_POST['submit']) || $id == 1){
+            if($id>1){
+                echo "<script>";
+                echo "startTimer();";
+                echo "</script>";
+                
+                echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?thema=' . $thema . '&id=' . $id . '&vorherige_id=' . $vorherige_id . '">';
 
-        if($id>1){
-            echo "<script>";
-            echo "startTimer();";
-            echo "</script>";
-            
-            echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?thema=' . $thema . '&id=' . $id . '&vorherige_id=' . $vorherige_id . '">';
+                    echo "<p>$frage</p>";
+                    echo '<ul>';
+                    echo "<li><input type='radio' name='1' value='1'> $antwort1</li>";
+                    echo "<li><input type='radio' name='1' value='2'> $antwort2</li>";
+                    echo "<li><input type='radio' name='1' value='3'> $antwort3</li>";
+                    echo '</ul>';
+
+                    echo '<input type="hidden" id="countdownValue" name="countdownValue" value="">';
+                    echo '<input type="submit" id="submitBtn"  value="Antworten überprüfen">';
+                    echo '<p id="countdownTimer"></p>';
+                    echo '<p id="ergebnis"></p>';
+                    echo '</form>';
+                
+            }
+            else{
+                echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?thema=' . $thema . '&id=' . $id . '&vorherige_id=' . $vorherige_id . '">';
 
                 echo "<p>$frage</p>";
                 echo '<ul>';
@@ -126,34 +147,19 @@ if ($id <= $sql_maxfragenid){
                 echo "<li><input type='radio' name='1' value='2'> $antwort2</li>";
                 echo "<li><input type='radio' name='1' value='3'> $antwort3</li>";
                 echo '</ul>';
-
                 echo '<input type="hidden" id="countdownValue" name="countdownValue" value="">';
+                
                 echo '<input type="submit" id="submitBtn"  value="Antworten überprüfen">';
                 echo '<p id="countdownTimer"></p>';
                 echo '<p id="ergebnis"></p>';
                 echo '</form>';
-            
-        }
-        else{
-            echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?thema=' . $thema . '&id=' . $id . '&vorherige_id=' . $vorherige_id . '">';
-
-            echo "<p>$frage</p>";
-            echo '<ul>';
-            echo "<li><input type='radio' name='1' value='1'> $antwort1</li>";
-            echo "<li><input type='radio' name='1' value='2'> $antwort2</li>";
-            echo "<li><input type='radio' name='1' value='3'> $antwort3</li>";
-            echo '</ul>';
-            // Weitere Fragen und Antworten hier einfügen
-            echo '<input type="hidden" id="countdownValue" name="countdownValue" value="">';
-            echo '<input type="submit" id="submitBtn"  value="Antworten überprüfen">';
-            echo '<p id="countdownTimer"></p>';
-            echo '<p id="ergebnis"></p>';
-            echo '</form>';
-        }
+            }
+        }   
     }
 }
 else{
-    echo "sdcfgvhbjk";
+    echo "Quiz beendet";
+    echo "<p><a href='Hauptseite.php'>Haupseite</a></p>" ;
 }
 
 // Verbindung schließen
