@@ -50,11 +50,11 @@ if ($result && mysqli_num_rows($result) > 0) {
     echo "<div class='statistics-wrapper'>";
     echo "<h3>Deine Statistiken</h3>";
     echo "<div class='user-statistics'>";
-    echo "<div class='statistic-item'><p>Gesamtpunkte:</p> <span>" . $row['gesamt_punkte'] . "</span></div>";
-    echo "<div class='statistic-item'><p>Richtig beantwortet:</p> <span>" . $row['richtig_beantwortet'] . "</span></div>";
-    echo "<div class='statistic-item'><p>Gesamt beantwortet:</p> <span>" . $row['gesamt_fragen'] . "</span></div>";
+    echo "<div class='statistic-item'><p>Gesamtpunkte:</p> <span>" . number_format($row['gesamt_punkte'], 0, ',', '.') . "</span></div>";
+    echo "<div class='statistic-item'><p>Richtig beantwortet:</p> <span>" . number_format($row['richtig_beantwortet'], 0, ',', '.') . "</span></div>";
+    echo "<div class='statistic-item'><p>Gesamt beantwortet:</p> <span>" . number_format($row['gesamt_fragen'], 0, ',', '.') ."</span></div>";
     if ($row['gesamt_fragen'] > 0) {
-        echo "<div class='statistic-item'>WR: <span>" . ($row['richtig_beantwortet'] / $row['gesamt_fragen']) * 100 . "%</span></div>";
+        echo "<div class='statistic-item'>WR: <span>" . number_format(($row['richtig_beantwortet'] / $row['gesamt_fragen']) * 100, 2, ',') . "%</span></div>";
     }
     echo "</div>"; // Closing user-statistics div
     echo "</div>"; // Closing statistics-wrapper div

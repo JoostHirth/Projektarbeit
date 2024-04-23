@@ -52,11 +52,12 @@ if ($result && mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         echo "<tr>";
         echo "<td>" . $row['username'] . "</td>";
-        echo "<td>" . $row['gesamt_punkte'] . "</td>";
-        echo "<td>" . $row['richtig_beantwortet'] . "</td>";
-        echo "<td>" . $row['gesamt_fragen'] . "</td>";
+        echo "<td>" . number_format($row['gesamt_punkte'], 0, ',', '.') . "</td>";
+        echo "<td>" . number_format($row['richtig_beantwortet'], 0, ',', '.') . "</td>";
+        echo "<td>" . number_format($row['gesamt_fragen'], 0, ',', '.') . "</td>";
         echo "</tr>";
     }
+     
     echo "</table>";
     echo"</div>";
 } else {
