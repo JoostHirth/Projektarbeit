@@ -1,6 +1,5 @@
 <?php
 session_start();
-include 'login.php';
 include 'config.php';
 
 $con = new mysqli($servername, $username, $password, $dbname);
