@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         else{
             echo "\nQuiz beendet";
-            echo "<p><a href='hauptseite.php'>Haupseite</a></p>" ;
+            echo "<p><a href='Hauptseite.php'>Haupseite</a></p>" ;
         }
         //ende auswertung der antwort
     }
