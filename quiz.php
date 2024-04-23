@@ -1,3 +1,6 @@
+
+<link rel="stylesheet" href="quiz2.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <?php
 session_start();
 include 'config.php';
@@ -66,11 +69,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $row = mysqli_fetch_assoc($korrekte_antwort_result);
             $korrekt = $row['korrekt'];
             if ($korrekt == 1) {
-                echo "Die Antwort ist korrekt!";
                 $countdown = $_POST['countdownValue']; 
-                $points = calculatePoints($countdown); 
-                echo " Punkte: " . $points;
-                $sql_punkte = "UPDATE userdaten SET gesamt_punkte = gesamt_punkte + '$points' WHERE username = '$benutzername'";
+                $points = calculatePoints($countdown);
+                echo "<p id='correctText'>Die Antwort ist korrekt! <span id='points'>Punkte: $points</span></p>";
+                 $sql_punkte = "UPDATE userdaten SET gesamt_punkte = gesamt_punkte + '$points' WHERE username = '$benutzername'";
                 mysqli_query($conn, $sql_punkte);
                 $sql_fragen = "UPDATE userdaten SET gesamt_fragen = gesamt_fragen + 1 WHERE username = '$benutzername'";
                 mysqli_query($conn, $sql_fragen);
@@ -80,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $vorherige_id++;
                 $beantwortet = true;
             } else {
-                echo "Die Antwort ist falsch!";
+                echo "<p id='wrongText'>Die Antwort ist falsch!</p>";
                 $sql_fragen = "UPDATE userdaten SET gesamt_fragen = gesamt_fragen + 1 WHERE username = '$benutzername'";
                 mysqli_query($conn, $sql_fragen);
                 $id++;
@@ -89,19 +91,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }  
         } 
         else {
-            echo "Antwort wurde nicht eingegeben!";
+            echo "<p id='noAnswerText'>Antwort wurde nicht eingegeben!</p>";
             $id++;
             $vorherige_id++;
         }
         if ($id <= $sql_maxfragenid)
         {
-            echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?thema=' . $thema . '&id=' . $id . '&vorherige_id=' . $vorherige_id . '">';
-            echo "<input type='submit' name='next' value='Nächste Frage'>";
+            echo '<form class="quiz-form" method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?thema=' . $thema . '&id=' . $id . '&vorherige_id=' . $vorherige_id . '">';
+            echo "<input type='submit' name='next' id='nextBtn' value='Nächste Frage'>";
             echo "</form>";
         }
-        else{
-            echo "\nQuiz beendet";
-            echo "<p><a href='hauptseite.php'>Haupseite</a></p>" ;
+        else{echo "<div id='quizEndContainer'>";
+            echo "<p id='quizEndText'>Quiz beendet</p>";
+            echo "<div id='mainPageLink'><a href='hauptseite.php'>Haupseite</a></div>";
+            echo "</div>";
+            
+
         }
         //ende auswertung der antwort
     }
@@ -128,17 +133,20 @@ if ($id <= $sql_maxfragenid)
         $sql_antworttext2 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 2";
         $result_antworttext2 = mysqli_query($conn, $sql_antworttext2);
         $antwort2 = mysqli_fetch_assoc($result_antworttext2)['antwort_text'];
+        $result_antworttext2->close();
 
         $sql_antworttext3 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 3";
         $result_antworttext3 = mysqli_query($conn, $sql_antworttext3);
         $antwort3 = mysqli_fetch_assoc($result_antworttext3)['antwort_text'];
-        echo '<form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?thema=' . $thema . '&id=' . $id . '&vorherige_id=' . $vorherige_id . '">';
+        $result_antworttext3->close();
 
-        echo "<p>$frage</p>";
-        echo '<ul>';
-        echo "<li><input type='radio' name='1' value='1'> $antwort1</li>";
-        echo "<li><input type='radio' name='1' value='2'> $antwort2</li>";
-        echo "<li><input type='radio' name='1' value='3'> $antwort3</li>";
+        echo '<form class="quiz-form" method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?thema=' . $thema . '&id=' . $id . '&vorherige_id=' . $vorherige_id . '">';
+
+        echo "<div class='question'>$frage</div>";
+        echo '<ul class="answers">';
+        echo "<li><input type='radio' name='1' value='1'> <span class='answer-text'>$antwort1</span></li>";
+        echo "<li><input type='radio' name='1' value='2'> <span class='answer-text'>$antwort2</span></li>";
+        echo "<li><input type='radio' name='1' value='3'> <span class='answer-text'>$antwort3</span></li>";
         echo '</ul>';
 
         echo '<input type="hidden" id="countdownValue" name="countdownValue" value="">';
@@ -153,6 +161,15 @@ $conn->close();
 ?>
 
 <script>
+    setTimeout(function() {
+    var btn = document.getElementById('submitBtn');
+    btn.style.backgroundColor = "#4CAF50"; 
+    btn.style.cursor = "pointer";
+    btn.classList.add('animating');
+}, 2000);
+
+
+
 window.onload = function() {
     startTimer(); // Timer starten, wenn die Seite geladen wird
 };

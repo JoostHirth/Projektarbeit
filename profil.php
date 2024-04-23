@@ -5,8 +5,8 @@
 <h2>Credits</h2>
     <h4>Danke an:</h4>
     <h3>Development</h3>
-    <p>Alexander Diehl</p>
-    <p>Elias Konieczny</p>
+    <p>Joost Hirth</p>
+    <p>Marko Vincetic</p>
     <p>ChatGPT</p>
     <p>W3Schools</p>
     <p>Bard / Gemini</p>
@@ -14,7 +14,6 @@
     <p>Lilly Snow</p>
     <p>ansimuz</p>
     <p>Mounir Tohami</p>
-    <p>Screaming Brain Studios</p>
 
     
     <footer>
