@@ -8,7 +8,7 @@ if ($con->connect_error) {
     die("Error connecting to server" . $con->connect_error);
 }
 
-$errorMessage = ""; // Initialisiere die Fehlermeldung
+$errorMessage = ""; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $benutzername = $_POST['benutzername'];
