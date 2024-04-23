@@ -93,18 +93,8 @@ padding: 10px;
     flex-direction: column;
 
 }
-.error-message {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: red;
-    color: white;
-    font-size: 14px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    z-index: 999;
-}
+
+
 .error1 {
     position: absolute;
     top: 10px;
@@ -112,8 +102,8 @@ padding: 10px;
     transform: translateX(-50%);
     background-color: red;
     color: white;
-    font-size: 14px;
-    padding: 5px 10px;
+    font-size: 18px; 
+    padding: 10px 15px;
     border-radius: 5px;
     z-index: 999;
 }
