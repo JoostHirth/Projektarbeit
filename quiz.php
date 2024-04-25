@@ -5,10 +5,10 @@
 session_start();
 include 'config.php';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$con = new mysqli($servername, $username, $password, $dbname);
 
-if ($conn->connect_error) {
-    die("Verbindung fehlgeschlagen: " . $conn->connect_error);
+if ($con->connect_error) {
+    die("Verbindung fehlgeschlagen: " . $con->connect_error);
 }
 
 function calculatePoints($countdown) {
@@ -39,7 +39,7 @@ switch ($thema) {
         break;
 }
 $sql_maxfragen = "SELECT max(frage_id) as max_id FROM $antwort_thema";
-$sql_maxfragenresult = mysqli_query($conn, $sql_maxfragen);
+$sql_maxfragenresult = mysqli_query($con, $sql_maxfragen);
 $sql_maxfragenid = mysqli_fetch_assoc($sql_maxfragenresult)['max_id'];
 $show_question = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //auswertung der Antwort
 
         $korrekte_antwort_query = "SELECT korrekt FROM $antwort_thema WHERE frage_id = '$frage_id' AND antwort_id = '$antwort_id'";
-        $korrekte_antwort_result = mysqli_query($conn, $korrekte_antwort_query);
+        $korrekte_antwort_result = mysqli_query($con, $korrekte_antwort_query);
 
         if (mysqli_num_rows($korrekte_antwort_result) > 0) {
             $row = mysqli_fetch_assoc($korrekte_antwort_result);
@@ -73,18 +73,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $points = calculatePoints($countdown);
                 echo "<p id='correctText'>Die Antwort ist korrekt! <span id='points'>Punkte: $points</span></p>";
                  $sql_punkte = "UPDATE userdaten SET gesamt_punkte = gesamt_punkte + '$points' WHERE username = '$benutzername'";
-                mysqli_query($conn, $sql_punkte);
+                mysqli_query($con, $sql_punkte);
                 $sql_fragen = "UPDATE userdaten SET gesamt_fragen = gesamt_fragen + 1 WHERE username = '$benutzername'";
-                mysqli_query($conn, $sql_fragen);
+                mysqli_query($con, $sql_fragen);
                 $sql_richtig = "UPDATE userdaten SET richtig_beantwortet = richtig_beantwortet + 1 WHERE username = '$benutzername'";
-                mysqli_query($conn, $sql_richtig);
+                mysqli_query($con, $sql_richtig);
                 $id++;
                 $vorherige_id++;
                 $beantwortet = true;
             } else {
                 echo "<p id='wrongText'>Die Antwort ist falsch!</p>";
                 $sql_fragen = "UPDATE userdaten SET gesamt_fragen = gesamt_fragen + 1 WHERE username = '$benutzername'";
-                mysqli_query($conn, $sql_fragen);
+                mysqli_query($con, $sql_fragen);
                 $id++;
                 $vorherige_id++;
                 $beantwortet = true;
@@ -117,7 +117,7 @@ if ($id <= $sql_maxfragenid)
     {
         //fragen hollen und anzeigen
         $sql_fragetext = "SELECT frage_text FROM $frage_thema WHERE frage_id = $id"; 
-        $result_fragetext = mysqli_query($conn, $sql_fragetext);
+        $result_fragetext = mysqli_query($con, $sql_fragetext);
         $frage ="";
         if( $row=$result_fragetext->fetch_assoc())
         {
@@ -126,17 +126,17 @@ if ($id <= $sql_maxfragenid)
         $result_fragetext->close();
 
         $sql_antworttext1 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 1";
-        $result_antworttext1 = mysqli_query($conn, $sql_antworttext1);
+        $result_antworttext1 = mysqli_query($con, $sql_antworttext1);
         $antwort1 = $result_antworttext1->fetch_assoc()['antwort_text'];
         $result_antworttext1->close();
 
         $sql_antworttext2 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 2";
-        $result_antworttext2 = mysqli_query($conn, $sql_antworttext2);
+        $result_antworttext2 = mysqli_query($con, $sql_antworttext2);
         $antwort2 = mysqli_fetch_assoc($result_antworttext2)['antwort_text'];
         $result_antworttext2->close();
 
         $sql_antworttext3 = "SELECT antwort_text FROM $antwort_thema WHERE frage_id = $id AND antwort_id = 3";
-        $result_antworttext3 = mysqli_query($conn, $sql_antworttext3);
+        $result_antworttext3 = mysqli_query($con, $sql_antworttext3);
         $antwort3 = mysqli_fetch_assoc($result_antworttext3)['antwort_text'];
         $result_antworttext3->close();
 
@@ -157,7 +157,7 @@ if ($id <= $sql_maxfragenid)
     }   
 }
 // Verbindung schließen
-$conn->close();
+$con->close();
 ?>
 
 <script>
