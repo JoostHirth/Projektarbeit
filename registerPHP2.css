@@ -16,7 +16,7 @@ body {
 }
 
 .error-message-container {
-    background-color: rgba(255, 255, 255, 0.7); /* Transparent background */
+    background-color: rgba(255, 255, 255, 0.2); /* Transparent background */
     padding: 60px; /* Increase padding */
     border-radius: 20px; /* Increase border radius */
     border: 2px solid black; /* Black border */

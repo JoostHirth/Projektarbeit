@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="regestrierenPHP.css">
+<link rel="stylesheet" href="registerPHP2.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 <?php
