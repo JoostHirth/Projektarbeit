@@ -73,15 +73,18 @@ body{
     padding:20px 100px 20px 100px;
 
 }
+
 .error-message {
+    display: none;
     position: absolute;
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
     background-color: red;
     color: white;
-    font-size: 18px; 
+    font-size: 18px;
     padding: 10px 15px;
     border-radius: 5px;
-    z-index: 999;
 }
+
+

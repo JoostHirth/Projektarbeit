@@ -3,17 +3,17 @@
 <nav class="sidebar">
 
 <h2>Credits</h2>
-    <h4>Danke an:</h4>
     <h3>Development</h3>
     <p>Joost Hirth</p>
     <p>Marko Vincetic</p>
     <p>ChatGPT</p>
-    <p>W3Schools</p>
-    <p>Bard / Gemini</p>
-    <h3>Art-Designer</h3>
-    <p>Lilly Snow</p>
-    <p>ansimuz</p>
-    <p>Mounir Tohami</p>
+    <p>W3Schools PHP</p>
+    <p>W3Schools HTML</p>
+    <p>W3Schools CSS</p>
+    <p>W3Schools SQL</p>
+    <p>W3Schools js</p>
+    <h3>Art Designer:</h3>
+    <p>Ethan Steele</p>
 
     
     <footer>

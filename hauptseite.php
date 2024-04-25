@@ -16,7 +16,7 @@ include 'config.php';
     <title>Hauptseite</title>
 </head>
 <body>
-<h1 class="title">QUIZIO</h1>
+<h1 class="title">QUIZIFY</h1>
 <?php
 $con = new mysqli($servername, $username, $password, $dbname);
 if ($con->connect_error) {

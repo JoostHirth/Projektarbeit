@@ -79,3 +79,22 @@ body{
     padding:20px 100px 20px 100px;
 
 }
+.error-message {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: red;
+    color: white;
+    font-size: 18px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    z-index: 999;
+    display: none;
+    animation: fadeOut 3s ease forwards; /* Animation to fade out */
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; display: none; }
+}

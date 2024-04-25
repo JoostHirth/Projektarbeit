@@ -1,0 +1,70 @@
+/* style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #d8daeb; /* Light blue background */
+    color: black; /* Black font color */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.error-message-container {
+    background-color: rgba(255, 255, 255, 0.7); /* Transparent background */
+    padding: 60px; /* Increase padding */
+    border-radius: 20px; /* Increase border radius */
+    border: 2px solid black; /* Black border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.error-message h2 {
+    font-family: Arial, sans-serif;
+    font-size: 36px; /* Bigger font size */
+    color: black; /* Black font color */
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Add shadow */
+    padding: 10px; /* Add padding */
+}
+
+.error-message {
+    color: black; /* Black font color */
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px; /* Add padding */
+}
+
+.error-message a {
+    color: black; /* Black font color */
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.error-message a:hover {
+    text-decoration: underline;
+}
+
+.register-button {
+    padding: 20px 40px; /* Add padding */
+    background-color: #d8bfd8;
+    color: black;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+}
+
+.register-button:hover {
+    background-color: #f0e6fa;
+}

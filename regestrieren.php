@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="regestrierenPHP.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 <?php
 session_start();
 include 'config.php';
@@ -16,7 +19,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $check_result = $con->query($check_sql);
 
     if ($check_result->num_rows > 0) {
-        echo "Benutzername bereits vergeben. Bitte wähle einen anderen.";
+        echo '<div class="container">';
+        echo '<div class="error-message-container">';
+        echo '<h2>Problem occurred ): </h2>';
+        echo '<div class="error-message">User already in use</div>';
+        echo '<a href="regestrieren_form.htm" class="register-button">Zurück zur Registrierung</a>';
+        echo '</div>';
+        echo '</div>';
+        exit;
     } else {
         $sql = "INSERT INTO userdaten (username, passwort) VALUES ('$benutzername', '$passwort')";
 
@@ -25,7 +35,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: hauptseite.php");
             exit;
         } else {
-            echo "Fehler bei der Benutzerkontenerstellung: " . $con->error;
+            echo "error";
+            exit;
         }
     }
 }

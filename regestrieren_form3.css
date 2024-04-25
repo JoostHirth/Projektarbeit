@@ -69,8 +69,8 @@ body{
     border:3px solid rgba(255, 255,255,0.2);    
     border-radius:30px;
     background:transparent;
-    margin-top:20px;
-    padding:20px 100px 20px 100px;
+    margin-top:100px;
+    padding:20px 100px 50px 100px;
 
 }
 .error-message {
