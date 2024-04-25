@@ -37,9 +37,9 @@ echo"
 <h3>Wähle ein Quiz-Thema:</h3>
 
 <ul>
-<li><a href='quiz.php?thema=1'>Quiz Thema 1</a></li>
-<li><a href='quiz.php?thema=2'>Quiz Thema 2</a></li>
-<li><a href='quiz.php?thema=3'>Quiz Thema 3</a></li>
+<li><a href='quiz.php?thema=1'>KOM</a></li>
+<li><a href='quiz.php?thema=2'>PROG</a></li>
+<li><a href='quiz.php?thema=3'>INF</a></li>
 <li><a href='quiz.php?thema=4'>ETK</a></li>
 </ul>
 </div>
