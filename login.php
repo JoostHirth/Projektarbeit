@@ -8,7 +8,7 @@ if ($con->connect_error) {
     die("Error connecting to server" . $con->connect_error);
 }
 
-$errorMessage = ""; // Initialize error message
+$errorMessage = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $benutzername = $_POST['benutzername'];
@@ -50,17 +50,17 @@ $con->close();
             var form = document.querySelector('form');
 
             form.addEventListener('submit', function (event) {
-                event.preventDefault(); // Prevent form submission
+                event.preventDefault(); 
 
                 var benutzername = document.querySelector('.name').value;
                 var passwort = document.querySelector('.password').value;
 
-                // Your validation logic
+                
                 if (benutzername === "" || passwort === "") {
                     document.getElementById("error-message").innerText = "Bitte geben Sie Benutzername und Passwort ein!";
                     document.getElementById("error-message").style.display = "block";
 
-                    // Hide error message after 3 seconds
+                    
                     setTimeout(function() {
                         document.getElementById("error-message").style.display = "none";
                     }, 3000);
@@ -68,12 +68,10 @@ $con->close();
                     return;
                 }
 
-                // If there's an error from PHP, show the message
                 if (errorMessage !== "") {
                     document.getElementById("error-message").innerText = errorMessage;
                     document.getElementById("error-message").style.display = "block";
 
-                    // Hide error message after 3 seconds
                     setTimeout(function() {
                         document.getElementById("error-message").style.display = "none";
                     }, 3000);

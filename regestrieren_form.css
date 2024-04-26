@@ -91,7 +91,7 @@ body{
     border-radius: 5px;
     z-index: 999;
     display: none;
-    animation: fadeOut 3s ease forwards; /* Animation to fade out */
+    animation: fadeOut 3s ease forwards;
 }
 
 @keyframes fadeOut {
