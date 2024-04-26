@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 16. Apr 2024 um 12:12
+-- Erstellungszeit: 26. Apr 2024 um 10:39
 -- Server-Version: 10.4.32-MariaDB
 -- PHP-Version: 8.2.12
 
@@ -60,15 +60,6 @@ CREATE TABLE `quiz_antwort` (
   `korrekt` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Daten für Tabelle `quiz_antwort`
---
-
-INSERT INTO `quiz_antwort` (`antwort_id`, `frage_id`, `antwort_text`, `korrekt`) VALUES
-(1, 1, 'Berlin', 0),
-(2, 1, 'London', 0),
-(3, 1, 'Paris', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -82,6 +73,24 @@ CREATE TABLE `quiz_antwort2` (
   `korrekt` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Daten für Tabelle `quiz_antwort2`
+--
+
+INSERT INTO `quiz_antwort2` (`antwort_id`, `frage_id`, `antwort_text`, `korrekt`) VALUES
+(1, 1, 'create_circle', 0),
+(2, 1, 'create_oval', 1),
+(3, 1, 'draw_circle', 0),
+(1, 4, 'Integer', 0),
+(2, 4, 'Float', 0),
+(3, 4, 'String', 1),
+(1, 2, 'Typecasting', 1),
+(2, 2, 'Datentypwandelprozess', 0),
+(3, 2, 'Casttyping', 0),
+(1, 3, 'Zeichenraum', 0),
+(2, 3, 'Canvas', 1),
+(3, 3, 'Cannix', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -94,6 +103,18 @@ CREATE TABLE `quiz_antwort3` (
   `antwort_text` varchar(255) NOT NULL,
   `korrekt` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Daten für Tabelle `quiz_antwort3`
+--
+
+INSERT INTO `quiz_antwort3` (`antwort_id`, `frage_id`, `antwort_text`, `korrekt`) VALUES
+(1, 1, 'RS-Flip-Flop', 0),
+(2, 1, 'D-Flip-Flop', 0),
+(3, 1, 'SR-Flip-Flop', 1),
+(1, 2, 'Transistor', 0),
+(2, 2, 'Flip-Flop', 1),
+(3, 2, 'Kondensator', 0);
 
 -- --------------------------------------------------------
 
@@ -118,7 +139,10 @@ INSERT INTO `quiz_antwort4` (`antwort_id`, `frage_id`, `antwort_text`, `korrekt`
 (3, 1, 'Kunststoff ', 1),
 (1, 2, 'Spannung', 0),
 (2, 2, 'Widerstand', 0),
-(3, 2, 'Stromstärke ', 1);
+(3, 2, 'Stromstärke ', 1),
+(1, 3, 'Ohmsches Gesetz', 1),
+(2, 3, 'Kirchhoffsches Gesetz', 0),
+(3, 3, ' Faradaysches Gesetz', 0);
 
 -- --------------------------------------------------------
 
@@ -136,7 +160,9 @@ CREATE TABLE `quiz_frage` (
 --
 
 INSERT INTO `quiz_frage` (`frage_id`, `frage_text`) VALUES
-(1, 'Was ist die Hauptstadt von Frankreich?');
+(1, 'Welches Kommunikationsprotokoll wird typischerweise für den Versand von E-Mails verwendet?'),
+(2, 'Welche Art von Kabel wird häufig für die Verbindung von Computern mit einem Netzwerk verwendet?'),
+(3, 'Welche Technologie wird verwendet, um drahtlose Kommunikation zwischen mobilen Geräten zu ermöglichen?');
 
 -- --------------------------------------------------------
 
@@ -149,6 +175,16 @@ CREATE TABLE `quiz_frage2` (
   `frage_text` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Daten für Tabelle `quiz_frage2`
+--
+
+INSERT INTO `quiz_frage2` (`frage_id`, `frage_text`) VALUES
+(1, 'Wie lautet der Befehl, um einen Kreis in tkinter in Python zu zeichnen?\r\n'),
+(2, 'Wie nennt man das Umwandeln von Datentypen in Python?\r\n'),
+(3, 'Was muss erstellt werden, bevor in tkinter gezeichnet werden kann?\r\n'),
+(4, 'In welchem Datentyp werden Zeichenketten gespeichert?\r\n');
+
 -- --------------------------------------------------------
 
 --
@@ -159,6 +195,14 @@ CREATE TABLE `quiz_frage3` (
   `frage_id` int(11) NOT NULL,
   `frage_text` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Daten für Tabelle `quiz_frage3`
+--
+
+INSERT INTO `quiz_frage3` (`frage_id`, `frage_text`) VALUES
+(1, 'Welche Art von Flip-Flop speichert einen einzelnen Bitzustand und kann zwischen zwei stabilen Zuständen wechseln?'),
+(2, 'Welche Art von Speicherbauelement wird typischerweise verwendet, um Daten in digitalen Schaltkreisen zu speichern und zu verarbeiten?');
 
 -- --------------------------------------------------------
 
@@ -201,8 +245,12 @@ CREATE TABLE `userdaten` (
 
 INSERT INTO `userdaten` (`ID`, `username`, `passwort`, `gesamt_punkte`, `richtig_beantwortet`, `gesamt_fragen`) VALUES
 (1, 'ghjkl', '$2y$10$Y4A5fcdLb2c9hbYyygX7guZCs21pKx2/XspCxjj0hmlxVKrif2HKe', 3927, 1, 2),
-(3, 'qwer', '$2y$10$ZLsoa98D6lFNo/0Htv.cL.SsPr9tyCApU2naZcifcdu1wGHtWHWZe', 7924, 8, 10),
-(4, 'hfjkdb', '$2y$10$iEk4n3cZipEZWBcmASS9C.26DiScAchc8h5exEPJcudvB/FtVZQz.', 8565, 16, 18);
+(7, 'Axel', '$2y$10$w1yFnQV5GGAwFH0Vb/Vh9eXpOByJg.ggfVJ5mWU5d0pdfDSd3bqla', 0, 0, 0),
+(8, 'marko', '$2y$10$mE/RnkTwsMhdHLNNdicWSuIQShjcE8LU1oDhiEmDx/QflxV1uOdMa', 0, 0, 0),
+(9, 'Max Verstappen', '$2y$10$Jcp0l5EFhZ8tWH5LW3Nz9OUesTI7rMdg75L0nMzd4ZcPr0kRLHzfa', 4857, 5, 5),
+(10, 'elias', '$2y$10$gVsV5xRonES81N0c3fzI8OFP0rm3BnurjkFk.EmuXeeE.qWrJitsS', 1077, 2, 4),
+(11, 'Peter', '$2y$10$7XlXe6iXN4xXMEzCPW1DAOiQw8TIfhMAcaE.yKI8ftzVO9uUr0iTa', 1987, 2, 3),
+(12, 'Joost', '$2y$10$OMMYUTqZdKXYd6Nx2Q5qAePkd4Fx3lEKOzgipkMiMoe4KQKFoYXHK', 9990, 11, 17);
 
 --
 -- Indizes der exportierten Tabellen
@@ -221,8 +269,7 @@ ALTER TABLE `ergebnisse`
 -- Indizes für die Tabelle `quiz_antwort`
 --
 ALTER TABLE `quiz_antwort`
-  ADD PRIMARY KEY (`antwort_id`),
-  ADD KEY `frage_id` (`frage_id`);
+  ADD PRIMARY KEY (`antwort_id`,`frage_id`);
 
 --
 -- Indizes für die Tabelle `quiz_frage`
@@ -247,22 +294,16 @@ ALTER TABLE `ergebnisse`
   MODIFY `ergebnis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT für Tabelle `quiz_antwort`
---
-ALTER TABLE `quiz_antwort`
-  MODIFY `antwort_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
 -- AUTO_INCREMENT für Tabelle `quiz_frage`
 --
 ALTER TABLE `quiz_frage`
-  MODIFY `frage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `frage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT für Tabelle `userdaten`
 --
 ALTER TABLE `userdaten`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints der exportierten Tabellen
@@ -275,12 +316,6 @@ ALTER TABLE `ergebnisse`
   ADD CONSTRAINT `ergebnisse_ibfk_1` FOREIGN KEY (`benutzer_id`) REFERENCES `userdaten` (`ID`),
   ADD CONSTRAINT `ergebnisse_ibfk_2` FOREIGN KEY (`frage_id`) REFERENCES `quiz_frage` (`frage_id`),
   ADD CONSTRAINT `ergebnisse_ibfk_3` FOREIGN KEY (`antwort_id`) REFERENCES `quiz_antwort` (`antwort_id`);
-
---
--- Constraints der Tabelle `quiz_antwort`
---
-ALTER TABLE `quiz_antwort`
-  ADD CONSTRAINT `quiz_antwort_ibfk_1` FOREIGN KEY (`frage_id`) REFERENCES `quiz_frage` (`frage_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
