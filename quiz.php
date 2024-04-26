@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="quiz2.css">
+<link rel="stylesheet" href="quiz4.css">
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 <?php
@@ -159,9 +159,9 @@ if ($id <= $sql_maxfragenid) {
         echo '<form class="quiz-form" method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?thema=' . $thema . '&id=' . $id . '&vorherige_id=' . $vorherige_id . '">';
         echo "<div class='question'>$frage</div>";
         echo '<ul class="answers">';
-        echo "<li><input type='radio' name='1' value='1'> <span class='answer-text'>$antwort1</span></li>";
-        echo "<li><input type='radio' name='1' value='2'> <span class='answer-text'>$antwort2</span></li>";
-        echo "<li><input type='radio' name='1' value='3'> <span class='answer-text'>$antwort3</span></li>";
+        echo "<li><input type='radio' class='lol' name='1' value='1'> <span class='answer-text'>$antwort1</span></li>";
+        echo "<li><input type='radio' name='1' class='lol' value='2'> <span class='answer-text'>$antwort2</span></li>";
+        echo "<li><input type='radio' name='1' class='lol' value='3'> <span class='answer-text'>$antwort3</span></li>";
         echo '</ul>';
 
         // Hidden Input für Countdown und Submit-Button um die werte mit post zu übergeben

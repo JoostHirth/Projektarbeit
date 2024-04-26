@@ -79,3 +79,38 @@ li {
 #submitBtn:hover {
     background-color: #45a049;
 }
+/* Style for radio buttons */
+.quiz-form input[type="radio"] {
+    display: none; /* Hide the actual radio buttons */
+}
+
+/* Style for custom radio buttons */
+.quiz-form input[type="radio"] + span {
+    position: relative;
+    padding-left: 30px; /* Adjust the space between the radio button and text */
+    cursor: pointer;
+    display: inline-block;
+}
+
+/* Style for custom radio buttons - before pseudo-element */
+.quiz-form input[type="radio"] + span:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 3px; /* Adjust the vertical position as needed */
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    background-color: #fff;
+}
+
+/* Style for custom radio buttons - checked state */
+.quiz-form input[type="radio"]:checked + span:before {
+    background-color: #4CAF50; /* Change the background color when checked */
+}
+
+/* Style for custom radio buttons - hover state */
+.quiz-form input[type="radio"] + span:hover:before {
+    border-color: #4CAF50; /* Change the border color on hover */
+}
